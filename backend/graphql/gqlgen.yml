@@ -1,0 +1,15 @@
+schema:
+- schema/base.graphql
+- schema/product.graphql
+exec:
+  filename: internal/graphql/generated.go
+model:
+  filename: internal/models/models_gen.go
+
+resolver:
+  layout: follow-schema
+  dir: internal/resolver
+  package: resolver
+
+autobind:
+- github.com/hantonelli/ghipster/graphql/internal/service/ent/gen

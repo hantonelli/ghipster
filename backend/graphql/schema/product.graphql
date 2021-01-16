@@ -1,0 +1,54 @@
+# PRODUCT
+
+type Product {
+    id: Int!
+    name: String!
+}
+
+# Mutation
+
+input CreateProductInput {
+    name: String!
+}
+
+input UpdateProductInput {
+    id: Int!
+    name: String!
+}
+
+extend type Mutation {
+    createProduct(input: CreateProductInput!): Product
+    updateProduct(input: UpdateProductInput!): Product
+    deleteProduct(id: Int!): Boolean!
+}
+
+# Query
+
+input ProductOrderInput {
+    field: ProductlOrderFieldInput!
+    direction: OrderDirection
+}
+
+enum ProductlOrderFieldInput {
+    NAME
+}
+
+input ProductFilterInput {
+    name_like: String
+}
+
+type ProductsPayload {
+    total_count: Int!
+    nodes: [Product!]!
+}
+
+extend type Query {
+    product(id: Int!): Product
+
+    products(
+        filter: ProductFilterInput
+        orderBy: ProductOrderInput
+        offset: Int
+        limit: Int!
+    ): ProductsPayload!
+}

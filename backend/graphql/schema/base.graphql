@@ -1,0 +1,16 @@
+scalar Upload
+scalar Time
+scalar Duration
+
+enum OrderDirection {
+    ASC
+    DESC
+}
+
+type Query {
+    version: String
+}
+
+type Mutation {
+    version: String
+}
