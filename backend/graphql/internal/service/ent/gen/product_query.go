@@ -245,12 +245,12 @@ func (pq *ProductQuery) Clone() *ProductQuery {
 // Example:
 //
 //	var v []struct {
-//		Text string `json:"text,omitempty"`
+//		Name string `json:"name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Product.Query().
-//		GroupBy(product.FieldText).
+//		GroupBy(product.FieldName).
 //		Aggregate(gen.Count()).
 //		Scan(ctx, &v)
 //
@@ -272,11 +272,11 @@ func (pq *ProductQuery) GroupBy(field string, fields ...string) *ProductGroupBy 
 // Example:
 //
 //	var v []struct {
-//		Text string `json:"text,omitempty"`
+//		Name string `json:"name,omitempty"`
 //	}
 //
 //	client.Product.Query().
-//		Select(product.FieldText).
+//		Select(product.FieldName).
 //		Scan(ctx, &v)
 //
 func (pq *ProductQuery) Select(field string, fields ...string) *ProductSelect {

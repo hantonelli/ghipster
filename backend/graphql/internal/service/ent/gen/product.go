@@ -15,8 +15,8 @@ type Product struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// Text holds the value of the "text" field.
-	Text string `json:"text,omitempty"`
+	// Name holds the value of the "name" field.
+	Name string `json:"name,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -26,7 +26,7 @@ func (*Product) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case product.FieldID:
 			values[i] = &sql.NullInt64{}
-		case product.FieldText:
+		case product.FieldName:
 			values[i] = &sql.NullString{}
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Product", columns[i])
@@ -49,11 +49,11 @@ func (pr *Product) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			pr.ID = int(value.Int64)
-		case product.FieldText:
+		case product.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field text", values[i])
+				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				pr.Text = value.String
+				pr.Name = value.String
 			}
 		}
 	}
@@ -83,8 +83,8 @@ func (pr *Product) String() string {
 	var builder strings.Builder
 	builder.WriteString("Product(")
 	builder.WriteString(fmt.Sprintf("id=%v", pr.ID))
-	builder.WriteString(", text=")
-	builder.WriteString(pr.Text)
+	builder.WriteString(", name=")
+	builder.WriteString(pr.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }

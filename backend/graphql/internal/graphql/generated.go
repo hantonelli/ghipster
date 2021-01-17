@@ -37,7 +37,6 @@ type Config struct {
 
 type ResolverRoot interface {
 	Mutation() MutationResolver
-	Product() ProductResolver
 	Query() QueryResolver
 }
 
@@ -74,9 +73,6 @@ type MutationResolver interface {
 	CreateProduct(ctx context.Context, input models.CreateProductInput) (*gen.Product, error)
 	UpdateProduct(ctx context.Context, input models.UpdateProductInput) (*gen.Product, error)
 	DeleteProduct(ctx context.Context, id int) (bool, error)
-}
-type ProductResolver interface {
-	Name(ctx context.Context, obj *gen.Product) (string, error)
 }
 type QueryResolver interface {
 	Version(ctx context.Context) (*string, error)
@@ -696,14 +692,14 @@ func (ec *executionContext) _Product_name(ctx context.Context, field graphql.Col
 		Object:     "Product",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Product().Name(rctx, obj)
+		return obj.Name, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2216,22 +2212,13 @@ func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, 
 		case "id":
 			out.Values[i] = ec._Product_id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+				invalids++
 			}
 		case "name":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Product_name(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			})
+			out.Values[i] = ec._Product_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

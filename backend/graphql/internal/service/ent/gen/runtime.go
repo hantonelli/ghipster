@@ -13,8 +13,8 @@ import (
 func init() {
 	productFields := schema.Product{}.Fields()
 	_ = productFields
-	// productDescText is the schema descriptor for text field.
-	productDescText := productFields[0].Descriptor()
-	// product.TextValidator is a validator for the "text" field. It is called by the builders before save.
-	product.TextValidator = productDescText.Validators[0].(func(string) error)
+	// productDescName is the schema descriptor for name field.
+	productDescName := productFields[0].Descriptor()
+	// product.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	product.NameValidator = productDescName.Validators[0].(func(string) error)
 }

@@ -19,9 +19,9 @@ type ProductCreate struct {
 	hooks    []Hook
 }
 
-// SetText sets the "text" field.
-func (pc *ProductCreate) SetText(s string) *ProductCreate {
-	pc.mutation.SetText(s)
+// SetName sets the "name" field.
+func (pc *ProductCreate) SetName(s string) *ProductCreate {
+	pc.mutation.SetName(s)
 	return pc
 }
 
@@ -76,12 +76,12 @@ func (pc *ProductCreate) SaveX(ctx context.Context) *Product {
 
 // check runs all checks and user-defined validators on the builder.
 func (pc *ProductCreate) check() error {
-	if _, ok := pc.mutation.Text(); !ok {
-		return &ValidationError{Name: "text", err: errors.New("gen: missing required field \"text\"")}
+	if _, ok := pc.mutation.Name(); !ok {
+		return &ValidationError{Name: "name", err: errors.New("gen: missing required field \"name\"")}
 	}
-	if v, ok := pc.mutation.Text(); ok {
-		if err := product.TextValidator(v); err != nil {
-			return &ValidationError{Name: "text", err: fmt.Errorf("gen: validator failed for field \"text\": %w", err)}
+	if v, ok := pc.mutation.Name(); ok {
+		if err := product.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf("gen: validator failed for field \"name\": %w", err)}
 		}
 	}
 	return nil
@@ -111,13 +111,13 @@ func (pc *ProductCreate) createSpec() (*Product, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := pc.mutation.Text(); ok {
+	if value, ok := pc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: product.FieldText,
+			Column: product.FieldName,
 		})
-		_node.Text = value
+		_node.Name = value
 	}
 	return _node, _spec
 }

@@ -13,7 +13,7 @@ type Product struct {
 // Fields of the Product.
 func (Product) Fields() []ent.Field {
 	return []ent.Field{
-		field.Text("text").
+		field.Text("name").
 			NotEmpty(),
 	}
 }

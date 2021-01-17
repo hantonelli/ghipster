@@ -90,29 +90,29 @@ func IDLTE(id int) predicate.Product {
 	})
 }
 
-// Text applies equality check predicate on the "text" field. It's identical to TextEQ.
-func Text(v string) predicate.Product {
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldText), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// TextEQ applies the EQ predicate on the "text" field.
-func TextEQ(v string) predicate.Product {
+// NameEQ applies the EQ predicate on the "name" field.
+func NameEQ(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldText), v))
+		s.Where(sql.EQ(s.C(FieldName), v))
 	})
 }
 
-// TextNEQ applies the NEQ predicate on the "text" field.
-func TextNEQ(v string) predicate.Product {
+// NameNEQ applies the NEQ predicate on the "name" field.
+func NameNEQ(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldText), v))
+		s.Where(sql.NEQ(s.C(FieldName), v))
 	})
 }
 
-// TextIn applies the In predicate on the "text" field.
-func TextIn(vs ...string) predicate.Product {
+// NameIn applies the In predicate on the "name" field.
+func NameIn(vs ...string) predicate.Product {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -124,12 +124,12 @@ func TextIn(vs ...string) predicate.Product {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldText), v...))
+		s.Where(sql.In(s.C(FieldName), v...))
 	})
 }
 
-// TextNotIn applies the NotIn predicate on the "text" field.
-func TextNotIn(vs ...string) predicate.Product {
+// NameNotIn applies the NotIn predicate on the "name" field.
+func NameNotIn(vs ...string) predicate.Product {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -141,70 +141,70 @@ func TextNotIn(vs ...string) predicate.Product {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldText), v...))
+		s.Where(sql.NotIn(s.C(FieldName), v...))
 	})
 }
 
-// TextGT applies the GT predicate on the "text" field.
-func TextGT(v string) predicate.Product {
+// NameGT applies the GT predicate on the "name" field.
+func NameGT(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldText), v))
+		s.Where(sql.GT(s.C(FieldName), v))
 	})
 }
 
-// TextGTE applies the GTE predicate on the "text" field.
-func TextGTE(v string) predicate.Product {
+// NameGTE applies the GTE predicate on the "name" field.
+func NameGTE(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldText), v))
+		s.Where(sql.GTE(s.C(FieldName), v))
 	})
 }
 
-// TextLT applies the LT predicate on the "text" field.
-func TextLT(v string) predicate.Product {
+// NameLT applies the LT predicate on the "name" field.
+func NameLT(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldText), v))
+		s.Where(sql.LT(s.C(FieldName), v))
 	})
 }
 
-// TextLTE applies the LTE predicate on the "text" field.
-func TextLTE(v string) predicate.Product {
+// NameLTE applies the LTE predicate on the "name" field.
+func NameLTE(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldText), v))
+		s.Where(sql.LTE(s.C(FieldName), v))
 	})
 }
 
-// TextContains applies the Contains predicate on the "text" field.
-func TextContains(v string) predicate.Product {
+// NameContains applies the Contains predicate on the "name" field.
+func NameContains(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldText), v))
+		s.Where(sql.Contains(s.C(FieldName), v))
 	})
 }
 
-// TextHasPrefix applies the HasPrefix predicate on the "text" field.
-func TextHasPrefix(v string) predicate.Product {
+// NameHasPrefix applies the HasPrefix predicate on the "name" field.
+func NameHasPrefix(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldText), v))
+		s.Where(sql.HasPrefix(s.C(FieldName), v))
 	})
 }
 
-// TextHasSuffix applies the HasSuffix predicate on the "text" field.
-func TextHasSuffix(v string) predicate.Product {
+// NameHasSuffix applies the HasSuffix predicate on the "name" field.
+func NameHasSuffix(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldText), v))
+		s.Where(sql.HasSuffix(s.C(FieldName), v))
 	})
 }
 
-// TextEqualFold applies the EqualFold predicate on the "text" field.
-func TextEqualFold(v string) predicate.Product {
+// NameEqualFold applies the EqualFold predicate on the "name" field.
+func NameEqualFold(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldText), v))
+		s.Where(sql.EqualFold(s.C(FieldName), v))
 	})
 }
 
-// TextContainsFold applies the ContainsFold predicate on the "text" field.
-func TextContainsFold(v string) predicate.Product {
+// NameContainsFold applies the ContainsFold predicate on the "name" field.
+func NameContainsFold(v string) predicate.Product {
 	return predicate.Product(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldText), v))
+		s.Where(sql.ContainsFold(s.C(FieldName), v))
 	})
 }
 

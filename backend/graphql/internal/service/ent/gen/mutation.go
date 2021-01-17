@@ -31,7 +31,7 @@ type ProductMutation struct {
 	op            Op
 	typ           string
 	id            *int
-	text          *string
+	name          *string
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Product, error)
@@ -117,40 +117,40 @@ func (m *ProductMutation) ID() (id int, exists bool) {
 	return *m.id, true
 }
 
-// SetText sets the "text" field.
-func (m *ProductMutation) SetText(s string) {
-	m.text = &s
+// SetName sets the "name" field.
+func (m *ProductMutation) SetName(s string) {
+	m.name = &s
 }
 
-// Text returns the value of the "text" field in the mutation.
-func (m *ProductMutation) Text() (r string, exists bool) {
-	v := m.text
+// Name returns the value of the "name" field in the mutation.
+func (m *ProductMutation) Name() (r string, exists bool) {
+	v := m.name
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldText returns the old "text" field's value of the Product entity.
+// OldName returns the old "name" field's value of the Product entity.
 // If the Product object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ProductMutation) OldText(ctx context.Context) (v string, err error) {
+func (m *ProductMutation) OldName(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldText is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldText requires an ID field in the mutation")
+		return v, fmt.Errorf("OldName requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldText: %w", err)
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
 	}
-	return oldValue.Text, nil
+	return oldValue.Name, nil
 }
 
-// ResetText resets all changes to the "text" field.
-func (m *ProductMutation) ResetText() {
-	m.text = nil
+// ResetName resets all changes to the "name" field.
+func (m *ProductMutation) ResetName() {
+	m.name = nil
 }
 
 // Op returns the operation name.
@@ -168,8 +168,8 @@ func (m *ProductMutation) Type() string {
 // AddedFields().
 func (m *ProductMutation) Fields() []string {
 	fields := make([]string, 0, 1)
-	if m.text != nil {
-		fields = append(fields, product.FieldText)
+	if m.name != nil {
+		fields = append(fields, product.FieldName)
 	}
 	return fields
 }
@@ -179,8 +179,8 @@ func (m *ProductMutation) Fields() []string {
 // schema.
 func (m *ProductMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case product.FieldText:
-		return m.Text()
+	case product.FieldName:
+		return m.Name()
 	}
 	return nil, false
 }
@@ -190,8 +190,8 @@ func (m *ProductMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *ProductMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case product.FieldText:
-		return m.OldText(ctx)
+	case product.FieldName:
+		return m.OldName(ctx)
 	}
 	return nil, fmt.Errorf("unknown Product field %s", name)
 }
@@ -201,12 +201,12 @@ func (m *ProductMutation) OldField(ctx context.Context, name string) (ent.Value,
 // type.
 func (m *ProductMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case product.FieldText:
+	case product.FieldName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetText(v)
+		m.SetName(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Product field %s", name)
@@ -257,8 +257,8 @@ func (m *ProductMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *ProductMutation) ResetField(name string) error {
 	switch name {
-	case product.FieldText:
-		m.ResetText()
+	case product.FieldName:
+		m.ResetName()
 		return nil
 	}
 	return fmt.Errorf("unknown Product field %s", name)

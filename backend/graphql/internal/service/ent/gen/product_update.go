@@ -26,9 +26,9 @@ func (pu *ProductUpdate) Where(ps ...predicate.Product) *ProductUpdate {
 	return pu
 }
 
-// SetText sets the "text" field.
-func (pu *ProductUpdate) SetText(s string) *ProductUpdate {
-	pu.mutation.SetText(s)
+// SetName sets the "name" field.
+func (pu *ProductUpdate) SetName(s string) *ProductUpdate {
+	pu.mutation.SetName(s)
 	return pu
 }
 
@@ -96,9 +96,9 @@ func (pu *ProductUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (pu *ProductUpdate) check() error {
-	if v, ok := pu.mutation.Text(); ok {
-		if err := product.TextValidator(v); err != nil {
-			return &ValidationError{Name: "text", err: fmt.Errorf("gen: validator failed for field \"text\": %w", err)}
+	if v, ok := pu.mutation.Name(); ok {
+		if err := product.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf("gen: validator failed for field \"name\": %w", err)}
 		}
 	}
 	return nil
@@ -122,11 +122,11 @@ func (pu *ProductUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := pu.mutation.Text(); ok {
+	if value, ok := pu.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: product.FieldText,
+			Column: product.FieldName,
 		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
@@ -147,9 +147,9 @@ type ProductUpdateOne struct {
 	mutation *ProductMutation
 }
 
-// SetText sets the "text" field.
-func (puo *ProductUpdateOne) SetText(s string) *ProductUpdateOne {
-	puo.mutation.SetText(s)
+// SetName sets the "name" field.
+func (puo *ProductUpdateOne) SetName(s string) *ProductUpdateOne {
+	puo.mutation.SetName(s)
 	return puo
 }
 
@@ -217,9 +217,9 @@ func (puo *ProductUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (puo *ProductUpdateOne) check() error {
-	if v, ok := puo.mutation.Text(); ok {
-		if err := product.TextValidator(v); err != nil {
-			return &ValidationError{Name: "text", err: fmt.Errorf("gen: validator failed for field \"text\": %w", err)}
+	if v, ok := puo.mutation.Name(); ok {
+		if err := product.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf("gen: validator failed for field \"name\": %w", err)}
 		}
 	}
 	return nil
@@ -241,11 +241,11 @@ func (puo *ProductUpdateOne) sqlSave(ctx context.Context) (_node *Product, err e
 		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Product.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := puo.mutation.Text(); ok {
+	if value, ok := puo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: product.FieldText,
+			Column: product.FieldName,
 		})
 	}
 	_node = &Product{config: puo.config}

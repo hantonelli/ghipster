@@ -5,38 +5,69 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 
-	graphql1 "github.com/hantonelli/ghipster/graphql/internal/graphql"
+	"github.com/facebook/ent/examples/start/ent/user"
 	"github.com/hantonelli/ghipster/graphql/internal/models"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/product"
 )
 
 func (r *mutationResolver) CreateProduct(ctx context.Context, input models.CreateProductInput) (*gen.Product, error) {
-	panic(fmt.Errorf("not implemented"))
+	client := gen.FromContext(ctx)
+	return client.Product.
+		Create().
+		SetName(input.Name).
+		Save(ctx)
 }
 
 func (r *mutationResolver) UpdateProduct(ctx context.Context, input models.UpdateProductInput) (*gen.Product, error) {
-	panic(fmt.Errorf("not implemented"))
+	client := gen.FromContext(ctx)
+	return client.Product.UpdateOneID(input.ID).SetName(input.Name).Save(ctx)
 }
 
 func (r *mutationResolver) DeleteProduct(ctx context.Context, id int) (bool, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-
-func (r *productResolver) Name(ctx context.Context, obj *gen.Product) (string, error) {
-	panic(fmt.Errorf("not implemented"))
+	client := gen.FromContext(ctx)
+	err := client.Product.
+		DeleteOneID(id).
+		Exec(ctx)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 func (r *queryResolver) Product(ctx context.Context, id int) (*gen.Product, error) {
-	panic(fmt.Errorf("not implemented"))
+	client := gen.FromContext(ctx)
+	return client.Product.Get(ctx, id)
 }
 
 func (r *queryResolver) Products(ctx context.Context, filter *models.ProductFilterInput, orderBy *models.ProductOrderInput, offset *int, limit int) (*models.ProductsPayload, error) {
-	panic(fmt.Errorf("not implemented"))
+	client := gen.FromContext(ctx)
+	q := client.Product.Query()
+	if filter != nil {
+		if filter.NameLike != nil {
+			q = q.Where(
+				product.NameEQ(*filter.NameLike),
+			)
+		}
+	}
+	totalCount, err := q.Count(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if orderBy != nil {
+		q = q.Order(gen.Asc(user.FieldName))
+	}
+	if offset != nil {
+		q = q.Offset(*offset)
+	}
+	nodes, err := q.Limit(limit).All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &models.ProductsPayload{
+		TotalCount: totalCount,
+		Nodes:      nodes,
+	}, nil
 }
-
-// Product returns graphql1.ProductResolver implementation.
-func (r *Resolver) Product() graphql1.ProductResolver { return &productResolver{r} }
-
-type productResolver struct{ *Resolver }

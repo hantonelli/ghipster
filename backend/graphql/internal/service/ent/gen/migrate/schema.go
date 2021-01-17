@@ -11,7 +11,7 @@ var (
 	// ProductsColumns holds the columns for the "products" table.
 	ProductsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "text", Type: field.TypeString, Size: 2147483647},
+		{Name: "name", Type: field.TypeString, Size: 2147483647},
 	}
 	// ProductsTable holds the schema information for the "products" table.
 	ProductsTable = &schema.Table{
