@@ -37,13 +37,11 @@ func (r *mutationResolver) DeleteProduct(ctx context.Context, id int) (bool, err
 }
 
 func (r *queryResolver) Product(ctx context.Context, id int) (*gen.Product, error) {
-	client := gen.FromContext(ctx)
-	return client.Product.Get(ctx, id)
+	return r.client.Product.Get(ctx, id)
 }
 
 func (r *queryResolver) Products(ctx context.Context, filter *models.ProductFilterInput, orderBy *models.ProductOrderInput, offset *int, limit int) (*models.ProductsPayload, error) {
-	client := gen.FromContext(ctx)
-	q := client.Product.Query()
+	q := r.client.Product.Query()
 	if filter != nil {
 		if filter.NameLike != nil {
 			q = q.Where(
