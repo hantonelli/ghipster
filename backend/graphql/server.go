@@ -20,7 +20,7 @@ import (
 
 func main() {
 	var cli struct {
-		Addr  string `name:"address" default:":8081" help:"Address to listen on."`
+		Addr  string `name:"address" default:":8080" help:"Address to listen on."`
 		Debug bool   `name:"debug" help:"Enable debugging mode."`
 	}
 	kong.Parse(&cli)
