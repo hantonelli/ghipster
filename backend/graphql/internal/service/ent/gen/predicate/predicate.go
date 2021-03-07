@@ -8,3 +8,9 @@ import (
 
 // Product is the predicate function for product builders.
 type Product func(*sql.Selector)
+
+// Review is the predicate function for review builders.
+type Review func(*sql.Selector)
+
+// User is the predicate function for user builders.
+type User func(*sql.Selector)

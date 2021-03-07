@@ -1,0 +1,67 @@
+# REVIEW
+
+type Review {
+  id: ID!
+  body: String!
+  author: User!
+  product: Product!
+}
+
+extend type Product {
+    reviews: [Review!]!
+}
+
+extend type User {
+  reviews: [Review!]!
+}
+
+# Mutation
+
+input CreateReviewInput {
+  body: String!
+  authorId: Int!
+  productId: Int!
+}
+
+input UpdateReviewInput {
+  id: Int!
+  body: String!
+}
+
+extend type Mutation {
+    createReview(input: CreateReviewInput!): Review
+    updateReview(input: UpdateReviewInput!): Review
+    deleteReview(id: Int!): Boolean!
+}
+
+# Query
+
+input ReviewOrderInput {
+    field: ReviewOrderFieldInput!
+    direction: OrderDirection
+}
+
+enum ReviewOrderFieldInput {
+    AUTHOR_NAME
+    PRODUCT_NAME
+}
+
+input ReviewFilterInput {
+    body_like: String
+}
+
+type ReviewsPayload {
+    total_count: Int!
+    nodes: [Review!]!
+}
+
+extend type Query {
+    review(id: Int!): Review
+
+    reviews(
+        filter: ReviewFilterInput
+        orderBy: ReviewOrderInput
+        offset: Int
+        limit: Int!
+    ): ReviewsPayload!
+}

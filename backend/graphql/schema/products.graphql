@@ -1,7 +1,7 @@
 # PRODUCT
 
 type Product {
-    id: Int!
+    id: ID!
     name: String!
 }
 
@@ -25,11 +25,11 @@ extend type Mutation {
 # Query
 
 input ProductOrderInput {
-    field: ProductlOrderFieldInput!
+    field: ProductOrderFieldInput!
     direction: OrderDirection
 }
 
-enum ProductlOrderFieldInput {
+enum ProductOrderFieldInput {
     NAME
 }
 

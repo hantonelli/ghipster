@@ -10,99 +10,99 @@ import (
 	"github.com/facebook/ent/dialect/sql/sqlgraph"
 	"github.com/facebook/ent/schema/field"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/predicate"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/product"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/review"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/user"
 )
 
-// ProductUpdate is the builder for updating Product entities.
-type ProductUpdate struct {
+// UserUpdate is the builder for updating User entities.
+type UserUpdate struct {
 	config
 	hooks    []Hook
-	mutation *ProductMutation
+	mutation *UserMutation
 }
 
-// Where adds a new predicate for the ProductUpdate builder.
-func (pu *ProductUpdate) Where(ps ...predicate.Product) *ProductUpdate {
-	pu.mutation.predicates = append(pu.mutation.predicates, ps...)
-	return pu
+// Where adds a new predicate for the UserUpdate builder.
+func (uu *UserUpdate) Where(ps ...predicate.User) *UserUpdate {
+	uu.mutation.predicates = append(uu.mutation.predicates, ps...)
+	return uu
 }
 
-// SetName sets the "name" field.
-func (pu *ProductUpdate) SetName(s string) *ProductUpdate {
-	pu.mutation.SetName(s)
-	return pu
+// SetUsername sets the "username" field.
+func (uu *UserUpdate) SetUsername(s string) *UserUpdate {
+	uu.mutation.SetUsername(s)
+	return uu
 }
 
 // AddReviewIDs adds the "reviews" edge to the Review entity by IDs.
-func (pu *ProductUpdate) AddReviewIDs(ids ...int) *ProductUpdate {
-	pu.mutation.AddReviewIDs(ids...)
-	return pu
+func (uu *UserUpdate) AddReviewIDs(ids ...int) *UserUpdate {
+	uu.mutation.AddReviewIDs(ids...)
+	return uu
 }
 
 // AddReviews adds the "reviews" edges to the Review entity.
-func (pu *ProductUpdate) AddReviews(r ...*Review) *ProductUpdate {
+func (uu *UserUpdate) AddReviews(r ...*Review) *UserUpdate {
 	ids := make([]int, len(r))
 	for i := range r {
 		ids[i] = r[i].ID
 	}
-	return pu.AddReviewIDs(ids...)
+	return uu.AddReviewIDs(ids...)
 }
 
-// Mutation returns the ProductMutation object of the builder.
-func (pu *ProductUpdate) Mutation() *ProductMutation {
-	return pu.mutation
+// Mutation returns the UserMutation object of the builder.
+func (uu *UserUpdate) Mutation() *UserMutation {
+	return uu.mutation
 }
 
 // ClearReviews clears all "reviews" edges to the Review entity.
-func (pu *ProductUpdate) ClearReviews() *ProductUpdate {
-	pu.mutation.ClearReviews()
-	return pu
+func (uu *UserUpdate) ClearReviews() *UserUpdate {
+	uu.mutation.ClearReviews()
+	return uu
 }
 
 // RemoveReviewIDs removes the "reviews" edge to Review entities by IDs.
-func (pu *ProductUpdate) RemoveReviewIDs(ids ...int) *ProductUpdate {
-	pu.mutation.RemoveReviewIDs(ids...)
-	return pu
+func (uu *UserUpdate) RemoveReviewIDs(ids ...int) *UserUpdate {
+	uu.mutation.RemoveReviewIDs(ids...)
+	return uu
 }
 
 // RemoveReviews removes "reviews" edges to Review entities.
-func (pu *ProductUpdate) RemoveReviews(r ...*Review) *ProductUpdate {
+func (uu *UserUpdate) RemoveReviews(r ...*Review) *UserUpdate {
 	ids := make([]int, len(r))
 	for i := range r {
 		ids[i] = r[i].ID
 	}
-	return pu.RemoveReviewIDs(ids...)
+	return uu.RemoveReviewIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (pu *ProductUpdate) Save(ctx context.Context) (int, error) {
+func (uu *UserUpdate) Save(ctx context.Context) (int, error) {
 	var (
 		err      error
 		affected int
 	)
-	if len(pu.hooks) == 0 {
-		if err = pu.check(); err != nil {
+	if len(uu.hooks) == 0 {
+		if err = uu.check(); err != nil {
 			return 0, err
 		}
-		affected, err = pu.sqlSave(ctx)
+		affected, err = uu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*ProductMutation)
+			mutation, ok := m.(*UserMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			if err = pu.check(); err != nil {
+			if err = uu.check(); err != nil {
 				return 0, err
 			}
-			pu.mutation = mutation
-			affected, err = pu.sqlSave(ctx)
+			uu.mutation = mutation
+			affected, err = uu.sqlSave(ctx)
 			mutation.done = true
 			return affected, err
 		})
-		for i := len(pu.hooks) - 1; i >= 0; i-- {
-			mut = pu.hooks[i](mut)
+		for i := len(uu.hooks) - 1; i >= 0; i-- {
+			mut = uu.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, pu.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, uu.mutation); err != nil {
 			return 0, err
 		}
 	}
@@ -110,8 +110,8 @@ func (pu *ProductUpdate) Save(ctx context.Context) (int, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (pu *ProductUpdate) SaveX(ctx context.Context) int {
-	affected, err := pu.Save(ctx)
+func (uu *UserUpdate) SaveX(ctx context.Context) int {
+	affected, err := uu.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -119,59 +119,59 @@ func (pu *ProductUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (pu *ProductUpdate) Exec(ctx context.Context) error {
-	_, err := pu.Save(ctx)
+func (uu *UserUpdate) Exec(ctx context.Context) error {
+	_, err := uu.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (pu *ProductUpdate) ExecX(ctx context.Context) {
-	if err := pu.Exec(ctx); err != nil {
+func (uu *UserUpdate) ExecX(ctx context.Context) {
+	if err := uu.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (pu *ProductUpdate) check() error {
-	if v, ok := pu.mutation.Name(); ok {
-		if err := product.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf("gen: validator failed for field \"name\": %w", err)}
+func (uu *UserUpdate) check() error {
+	if v, ok := uu.mutation.Username(); ok {
+		if err := user.UsernameValidator(v); err != nil {
+			return &ValidationError{Name: "username", err: fmt.Errorf("gen: validator failed for field \"username\": %w", err)}
 		}
 	}
 	return nil
 }
 
-func (pu *ProductUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
-			Table:   product.Table,
-			Columns: product.Columns,
+			Table:   user.Table,
+			Columns: user.Columns,
 			ID: &sqlgraph.FieldSpec{
 				Type:   field.TypeInt,
-				Column: product.FieldID,
+				Column: user.FieldID,
 			},
 		},
 	}
-	if ps := pu.mutation.predicates; len(ps) > 0 {
+	if ps := uu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := pu.mutation.Name(); ok {
+	if value, ok := uu.mutation.Username(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: product.FieldName,
+			Column: user.FieldUsername,
 		})
 	}
-	if pu.mutation.ReviewsCleared() {
+	if uu.mutation.ReviewsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   product.ReviewsTable,
-			Columns: []string{product.ReviewsColumn},
+			Table:   user.ReviewsTable,
+			Columns: []string{user.ReviewsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -182,12 +182,12 @@ func (pu *ProductUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := pu.mutation.RemovedReviewsIDs(); len(nodes) > 0 && !pu.mutation.ReviewsCleared() {
+	if nodes := uu.mutation.RemovedReviewsIDs(); len(nodes) > 0 && !uu.mutation.ReviewsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   product.ReviewsTable,
-			Columns: []string{product.ReviewsColumn},
+			Table:   user.ReviewsTable,
+			Columns: []string{user.ReviewsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -201,12 +201,12 @@ func (pu *ProductUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := pu.mutation.ReviewsIDs(); len(nodes) > 0 {
+	if nodes := uu.mutation.ReviewsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   product.ReviewsTable,
-			Columns: []string{product.ReviewsColumn},
+			Table:   user.ReviewsTable,
+			Columns: []string{user.ReviewsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -220,9 +220,9 @@ func (pu *ProductUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, pu.driver, _spec); err != nil {
+	if n, err = sqlgraph.UpdateNodes(ctx, uu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
-			err = &NotFoundError{product.Label}
+			err = &NotFoundError{user.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
 			err = cerr
 		}
@@ -231,89 +231,89 @@ func (pu *ProductUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	return n, nil
 }
 
-// ProductUpdateOne is the builder for updating a single Product entity.
-type ProductUpdateOne struct {
+// UserUpdateOne is the builder for updating a single User entity.
+type UserUpdateOne struct {
 	config
 	hooks    []Hook
-	mutation *ProductMutation
+	mutation *UserMutation
 }
 
-// SetName sets the "name" field.
-func (puo *ProductUpdateOne) SetName(s string) *ProductUpdateOne {
-	puo.mutation.SetName(s)
-	return puo
+// SetUsername sets the "username" field.
+func (uuo *UserUpdateOne) SetUsername(s string) *UserUpdateOne {
+	uuo.mutation.SetUsername(s)
+	return uuo
 }
 
 // AddReviewIDs adds the "reviews" edge to the Review entity by IDs.
-func (puo *ProductUpdateOne) AddReviewIDs(ids ...int) *ProductUpdateOne {
-	puo.mutation.AddReviewIDs(ids...)
-	return puo
+func (uuo *UserUpdateOne) AddReviewIDs(ids ...int) *UserUpdateOne {
+	uuo.mutation.AddReviewIDs(ids...)
+	return uuo
 }
 
 // AddReviews adds the "reviews" edges to the Review entity.
-func (puo *ProductUpdateOne) AddReviews(r ...*Review) *ProductUpdateOne {
+func (uuo *UserUpdateOne) AddReviews(r ...*Review) *UserUpdateOne {
 	ids := make([]int, len(r))
 	for i := range r {
 		ids[i] = r[i].ID
 	}
-	return puo.AddReviewIDs(ids...)
+	return uuo.AddReviewIDs(ids...)
 }
 
-// Mutation returns the ProductMutation object of the builder.
-func (puo *ProductUpdateOne) Mutation() *ProductMutation {
-	return puo.mutation
+// Mutation returns the UserMutation object of the builder.
+func (uuo *UserUpdateOne) Mutation() *UserMutation {
+	return uuo.mutation
 }
 
 // ClearReviews clears all "reviews" edges to the Review entity.
-func (puo *ProductUpdateOne) ClearReviews() *ProductUpdateOne {
-	puo.mutation.ClearReviews()
-	return puo
+func (uuo *UserUpdateOne) ClearReviews() *UserUpdateOne {
+	uuo.mutation.ClearReviews()
+	return uuo
 }
 
 // RemoveReviewIDs removes the "reviews" edge to Review entities by IDs.
-func (puo *ProductUpdateOne) RemoveReviewIDs(ids ...int) *ProductUpdateOne {
-	puo.mutation.RemoveReviewIDs(ids...)
-	return puo
+func (uuo *UserUpdateOne) RemoveReviewIDs(ids ...int) *UserUpdateOne {
+	uuo.mutation.RemoveReviewIDs(ids...)
+	return uuo
 }
 
 // RemoveReviews removes "reviews" edges to Review entities.
-func (puo *ProductUpdateOne) RemoveReviews(r ...*Review) *ProductUpdateOne {
+func (uuo *UserUpdateOne) RemoveReviews(r ...*Review) *UserUpdateOne {
 	ids := make([]int, len(r))
 	for i := range r {
 		ids[i] = r[i].ID
 	}
-	return puo.RemoveReviewIDs(ids...)
+	return uuo.RemoveReviewIDs(ids...)
 }
 
-// Save executes the query and returns the updated Product entity.
-func (puo *ProductUpdateOne) Save(ctx context.Context) (*Product, error) {
+// Save executes the query and returns the updated User entity.
+func (uuo *UserUpdateOne) Save(ctx context.Context) (*User, error) {
 	var (
 		err  error
-		node *Product
+		node *User
 	)
-	if len(puo.hooks) == 0 {
-		if err = puo.check(); err != nil {
+	if len(uuo.hooks) == 0 {
+		if err = uuo.check(); err != nil {
 			return nil, err
 		}
-		node, err = puo.sqlSave(ctx)
+		node, err = uuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*ProductMutation)
+			mutation, ok := m.(*UserMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			if err = puo.check(); err != nil {
+			if err = uuo.check(); err != nil {
 				return nil, err
 			}
-			puo.mutation = mutation
-			node, err = puo.sqlSave(ctx)
+			uuo.mutation = mutation
+			node, err = uuo.sqlSave(ctx)
 			mutation.done = true
 			return node, err
 		})
-		for i := len(puo.hooks) - 1; i >= 0; i-- {
-			mut = puo.hooks[i](mut)
+		for i := len(uuo.hooks) - 1; i >= 0; i-- {
+			mut = uuo.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, puo.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, uuo.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -321,8 +321,8 @@ func (puo *ProductUpdateOne) Save(ctx context.Context) (*Product, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (puo *ProductUpdateOne) SaveX(ctx context.Context) *Product {
-	node, err := puo.Save(ctx)
+func (uuo *UserUpdateOne) SaveX(ctx context.Context) *User {
+	node, err := uuo.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -330,57 +330,57 @@ func (puo *ProductUpdateOne) SaveX(ctx context.Context) *Product {
 }
 
 // Exec executes the query on the entity.
-func (puo *ProductUpdateOne) Exec(ctx context.Context) error {
-	_, err := puo.Save(ctx)
+func (uuo *UserUpdateOne) Exec(ctx context.Context) error {
+	_, err := uuo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (puo *ProductUpdateOne) ExecX(ctx context.Context) {
-	if err := puo.Exec(ctx); err != nil {
+func (uuo *UserUpdateOne) ExecX(ctx context.Context) {
+	if err := uuo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (puo *ProductUpdateOne) check() error {
-	if v, ok := puo.mutation.Name(); ok {
-		if err := product.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf("gen: validator failed for field \"name\": %w", err)}
+func (uuo *UserUpdateOne) check() error {
+	if v, ok := uuo.mutation.Username(); ok {
+		if err := user.UsernameValidator(v); err != nil {
+			return &ValidationError{Name: "username", err: fmt.Errorf("gen: validator failed for field \"username\": %w", err)}
 		}
 	}
 	return nil
 }
 
-func (puo *ProductUpdateOne) sqlSave(ctx context.Context) (_node *Product, err error) {
+func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
-			Table:   product.Table,
-			Columns: product.Columns,
+			Table:   user.Table,
+			Columns: user.Columns,
 			ID: &sqlgraph.FieldSpec{
 				Type:   field.TypeInt,
-				Column: product.FieldID,
+				Column: user.FieldID,
 			},
 		},
 	}
-	id, ok := puo.mutation.ID()
+	id, ok := uuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Product.ID for update")}
+		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing User.ID for update")}
 	}
 	_spec.Node.ID.Value = id
-	if value, ok := puo.mutation.Name(); ok {
+	if value, ok := uuo.mutation.Username(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: product.FieldName,
+			Column: user.FieldUsername,
 		})
 	}
-	if puo.mutation.ReviewsCleared() {
+	if uuo.mutation.ReviewsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   product.ReviewsTable,
-			Columns: []string{product.ReviewsColumn},
+			Table:   user.ReviewsTable,
+			Columns: []string{user.ReviewsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -391,12 +391,12 @@ func (puo *ProductUpdateOne) sqlSave(ctx context.Context) (_node *Product, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := puo.mutation.RemovedReviewsIDs(); len(nodes) > 0 && !puo.mutation.ReviewsCleared() {
+	if nodes := uuo.mutation.RemovedReviewsIDs(); len(nodes) > 0 && !uuo.mutation.ReviewsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   product.ReviewsTable,
-			Columns: []string{product.ReviewsColumn},
+			Table:   user.ReviewsTable,
+			Columns: []string{user.ReviewsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -410,12 +410,12 @@ func (puo *ProductUpdateOne) sqlSave(ctx context.Context) (_node *Product, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := puo.mutation.ReviewsIDs(); len(nodes) > 0 {
+	if nodes := uuo.mutation.ReviewsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   product.ReviewsTable,
-			Columns: []string{product.ReviewsColumn},
+			Table:   user.ReviewsTable,
+			Columns: []string{user.ReviewsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: &sqlgraph.FieldSpec{
@@ -429,12 +429,12 @@ func (puo *ProductUpdateOne) sqlSave(ctx context.Context) (_node *Product, err e
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &Product{config: puo.config}
+	_node = &User{config: uuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, puo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, uuo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
-			err = &NotFoundError{product.Label}
+			err = &NotFoundError{user.Label}
 		} else if cerr, ok := isSQLConstraintError(err); ok {
 			err = cerr
 		}

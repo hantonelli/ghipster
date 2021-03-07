@@ -9,14 +9,12 @@ import (
 	graphql1 "github.com/hantonelli/ghipster/graphql/internal/graphql"
 )
 
-var version string = "1"
-
-func (r *mutationResolver) Version(ctx context.Context) (*string, error) {
-	return &version, nil
+func (r *mutationResolver) Version(ctx context.Context) (string, error) {
+	return "1", nil
 }
 
-func (r *queryResolver) Version(ctx context.Context) (*string, error) {
-	return &version, nil
+func (r *queryResolver) Version(ctx context.Context) (string, error) {
+	return "1", nil
 }
 
 // Mutation returns graphql1.MutationResolver implementation.

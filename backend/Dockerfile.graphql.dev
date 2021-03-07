@@ -42,10 +42,38 @@ RUN GOOS=linux GOARCH=amd64 go build \
     -ldflags='-w -s -extldflags "-static"' -a \
     -o /go/bin/app ./graphql/server.go
 
+
+############################
+# STEP 3 build sqlite
+############################
+
+FROM alpine:latest AS sqlite-env
+
+RUN \
+  apk add --update \
+    alpine-sdk \
+    build-base  \
+    tcl-dev \
+    tk-dev \
+    mesa-dev \
+    jpeg-dev \
+    libjpeg-turbo-dev \
+  # Download latest release
+  && wget \
+    -O sqlite.tar.gz \
+    https://www.sqlite.org/src/tarball/sqlite.tar.gz?r=release \
+  && tar xvfz sqlite.tar.gz \
+  # Configure and make SQLite3 binary
+  && ./sqlite/configure --prefix=/usr \
+  && make \
+  && make install \
+  # Smoke test
+  && sqlite3 --version
+
 ############################
 # STEP 2 build a small image
 ############################
-FROM scratch
+FROM alpine:latest
 
 # Import from builder.
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
@@ -54,9 +82,12 @@ COPY --from=builder /etc/group /etc/group
 
 # Copy our static executable
 COPY --from=builder /go/bin/app /go/bin/app
+COPY --from=sqlite-env /usr/bin/sqlite3 /usr/bin/sqlite3
 
 # Use an unprivileged user.
 USER appuser:appuser
+
+RUN /usr/bin/sqlite3
 
 # Run the app binary.
 EXPOSE 8080

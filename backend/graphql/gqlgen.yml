@@ -1,6 +1,8 @@
 schema:
 - schema/base.graphql
-- schema/product.graphql
+- schema/accounts.graphql
+- schema/products.graphql
+- schema/reviews.graphql
 exec:
   filename: internal/graphql/generated.go
 model:

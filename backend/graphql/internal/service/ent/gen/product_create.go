@@ -10,6 +10,7 @@ import (
 	"github.com/facebook/ent/dialect/sql/sqlgraph"
 	"github.com/facebook/ent/schema/field"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/product"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/review"
 )
 
 // ProductCreate is the builder for creating a Product entity.
@@ -23,6 +24,27 @@ type ProductCreate struct {
 func (pc *ProductCreate) SetName(s string) *ProductCreate {
 	pc.mutation.SetName(s)
 	return pc
+}
+
+// SetID sets the "id" field.
+func (pc *ProductCreate) SetID(i int) *ProductCreate {
+	pc.mutation.SetID(i)
+	return pc
+}
+
+// AddReviewIDs adds the "reviews" edge to the Review entity by IDs.
+func (pc *ProductCreate) AddReviewIDs(ids ...int) *ProductCreate {
+	pc.mutation.AddReviewIDs(ids...)
+	return pc
+}
+
+// AddReviews adds the "reviews" edges to the Review entity.
+func (pc *ProductCreate) AddReviews(r ...*Review) *ProductCreate {
+	ids := make([]int, len(r))
+	for i := range r {
+		ids[i] = r[i].ID
+	}
+	return pc.AddReviewIDs(ids...)
 }
 
 // Mutation returns the ProductMutation object of the builder.
@@ -95,8 +117,10 @@ func (pc *ProductCreate) sqlSave(ctx context.Context) (*Product, error) {
 		}
 		return nil, err
 	}
-	id := _spec.ID.Value.(int64)
-	_node.ID = int(id)
+	if _node.ID == 0 {
+		id := _spec.ID.Value.(int64)
+		_node.ID = int(id)
+	}
 	return _node, nil
 }
 
@@ -111,6 +135,10 @@ func (pc *ProductCreate) createSpec() (*Product, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if id, ok := pc.mutation.ID(); ok {
+		_node.ID = id
+		_spec.ID.Value = id
+	}
 	if value, ok := pc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -118,6 +146,25 @@ func (pc *ProductCreate) createSpec() (*Product, *sqlgraph.CreateSpec) {
 			Column: product.FieldName,
 		})
 		_node.Name = value
+	}
+	if nodes := pc.mutation.ReviewsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   product.ReviewsTable,
+			Columns: []string{product.ReviewsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: review.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
@@ -161,8 +208,10 @@ func (pcb *ProductCreateBulk) Save(ctx context.Context) ([]*Product, error) {
 				if err != nil {
 					return nil, err
 				}
-				id := specs[i].ID.Value.(int64)
-				nodes[i].ID = int(id)
+				if nodes[i].ID == 0 {
+					id := specs[i].ID.Value.(int64)
+					nodes[i].ID = int(id)
+				}
 				return nodes[i], nil
 			})
 			for i := len(builder.hooks) - 1; i >= 0; i-- {

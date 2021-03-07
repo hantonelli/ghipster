@@ -22,6 +22,32 @@ func (f ProductFunc) Mutate(ctx context.Context, m gen.Mutation) (gen.Value, err
 	return f(ctx, mv)
 }
 
+// The ReviewFunc type is an adapter to allow the use of ordinary
+// function as Review mutator.
+type ReviewFunc func(context.Context, *gen.ReviewMutation) (gen.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f ReviewFunc) Mutate(ctx context.Context, m gen.Mutation) (gen.Value, error) {
+	mv, ok := m.(*gen.ReviewMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *gen.ReviewMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The UserFunc type is an adapter to allow the use of ordinary
+// function as User mutator.
+type UserFunc func(context.Context, *gen.UserMutation) (gen.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UserFunc) Mutate(ctx context.Context, m gen.Mutation) (gen.Value, error) {
+	mv, ok := m.(*gen.UserMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *gen.UserMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // Condition is a hook condition function.
 type Condition func(context.Context, gen.Mutation) bool
 

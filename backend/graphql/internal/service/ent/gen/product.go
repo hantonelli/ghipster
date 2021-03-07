@@ -17,6 +17,27 @@ type Product struct {
 	ID int `json:"id,omitempty"`
 	// Name holds the value of the "name" field.
 	Name string `json:"name,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the ProductQuery when eager-loading is set.
+	Edges ProductEdges `json:"edges"`
+}
+
+// ProductEdges holds the relations/edges for other nodes in the graph.
+type ProductEdges struct {
+	// Reviews holds the value of the reviews edge.
+	Reviews []*Review
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// ReviewsOrErr returns the Reviews value or an error if the edge
+// was not loaded in eager-loading.
+func (e ProductEdges) ReviewsOrErr() ([]*Review, error) {
+	if e.loadedTypes[0] {
+		return e.Reviews, nil
+	}
+	return nil, &NotLoadedError{edge: "reviews"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -58,6 +79,11 @@ func (pr *Product) assignValues(columns []string, values []interface{}) error {
 		}
 	}
 	return nil
+}
+
+// QueryReviews queries the "reviews" edge of the Product entity.
+func (pr *Product) QueryReviews() *ReviewQuery {
+	return (&ProductClient{config: pr.config}).QueryReviews(pr)
 }
 
 // Update returns a builder for updating this Product.

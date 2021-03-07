@@ -6,7 +6,7 @@ package resolver
 import (
 	"context"
 
-	"github.com/facebook/ent/examples/start/ent/user"
+	graphql1 "github.com/hantonelli/ghipster/graphql/internal/graphql"
 	"github.com/hantonelli/ghipster/graphql/internal/models"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/product"
@@ -55,7 +55,11 @@ func (r *queryResolver) Products(ctx context.Context, filter *models.ProductFilt
 	}
 
 	if orderBy != nil {
-		q = q.Order(gen.Asc(user.FieldName))
+		if *orderBy.Direction == models.OrderDirectionDesc {
+			q = q.Order(gen.Desc(string(orderBy.Field)))
+		} else {
+			q = q.Order(gen.Asc(string(orderBy.Field)))
+		}
 	}
 	if offset != nil {
 		q = q.Offset(*offset)
@@ -69,3 +73,8 @@ func (r *queryResolver) Products(ctx context.Context, filter *models.ProductFilt
 		Nodes:      nodes,
 	}, nil
 }
+
+// Product returns graphql1.ProductResolver implementation.
+func (r *Resolver) Product() graphql1.ProductResolver { return &productResolver{r} }
+
+type productResolver struct{ *Resolver }

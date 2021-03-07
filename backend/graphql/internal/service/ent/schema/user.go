@@ -6,22 +6,22 @@ import (
 	"github.com/facebook/ent/schema/field"
 )
 
-// Product holds the schema definition for the Product entity.
-type Product struct {
+// User holds the schema definition for the User entity.
+type User struct {
 	ent.Schema
 }
 
-// Fields of the Product.
-func (Product) Fields() []ent.Field {
+// Fields of the User.
+func (User) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int("id"),
-		field.Text("name").
+		field.Text("username").
 			NotEmpty(),
 	}
 }
 
-// Edges of the Product.
-func (Product) Edges() []ent.Edge {
+// Edges of the User.
+func (User) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("reviews", Review.Type),
 	}

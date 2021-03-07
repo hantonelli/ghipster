@@ -1,0 +1,54 @@
+# User
+type User {
+  id: ID!
+  username: String!
+}
+
+
+# Mutation
+
+input CreateUserInput {
+  username: String!
+}
+
+input UpdateUserInput {
+  id: Int!
+  username: String!
+}
+
+extend type Mutation {
+    createUser(input: CreateUserInput!): User
+    updateUser(input: UpdateUserInput!): User
+    deleteUser(id: Int!): Boolean!
+}
+
+# Query
+
+input UserOrderInput {
+    field: UserOrderFieldInput!
+    direction: OrderDirection
+}
+
+enum UserOrderFieldInput {
+    USER_NAME
+}
+
+input UserFilterInput {
+    username_like: String
+}
+
+type UsersPayload {
+    total_count: Int!
+    nodes: [User!]!
+}
+
+extend type Query {
+    user(id: Int!): User
+
+    users(
+        filter: UserFilterInput
+        orderBy: UserOrderInput
+        offset: Int
+        limit: Int!
+    ): UsersPayload!
+}

@@ -4,6 +4,8 @@ package gen
 
 import (
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/product"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/review"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/user"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/schema"
 )
 
@@ -14,7 +16,19 @@ func init() {
 	productFields := schema.Product{}.Fields()
 	_ = productFields
 	// productDescName is the schema descriptor for name field.
-	productDescName := productFields[0].Descriptor()
+	productDescName := productFields[1].Descriptor()
 	// product.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	product.NameValidator = productDescName.Validators[0].(func(string) error)
+	reviewFields := schema.Review{}.Fields()
+	_ = reviewFields
+	// reviewDescBody is the schema descriptor for body field.
+	reviewDescBody := reviewFields[1].Descriptor()
+	// review.BodyValidator is a validator for the "body" field. It is called by the builders before save.
+	review.BodyValidator = reviewDescBody.Validators[0].(func(string) error)
+	userFields := schema.User{}.Fields()
+	_ = userFields
+	// userDescUsername is the schema descriptor for username field.
+	userDescUsername := userFields[1].Descriptor()
+	// user.UsernameValidator is a validator for the "username" field. It is called by the builders before save.
+	user.UsernameValidator = userDescUsername.Validators[0].(func(string) error)
 }

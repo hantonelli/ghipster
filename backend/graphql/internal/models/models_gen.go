@@ -14,13 +14,23 @@ type CreateProductInput struct {
 	Name string `json:"name"`
 }
 
+type CreateReviewInput struct {
+	Body      string `json:"body"`
+	AuthorID  int    `json:"authorId"`
+	ProductID int    `json:"productId"`
+}
+
+type CreateUserInput struct {
+	Username string `json:"username"`
+}
+
 type ProductFilterInput struct {
 	NameLike *string `json:"name_like"`
 }
 
 type ProductOrderInput struct {
-	Field     ProductlOrderFieldInput `json:"field"`
-	Direction *OrderDirection         `json:"direction"`
+	Field     ProductOrderFieldInput `json:"field"`
+	Direction *OrderDirection        `json:"direction"`
 }
 
 type ProductsPayload struct {
@@ -28,9 +38,47 @@ type ProductsPayload struct {
 	Nodes      []*gen.Product `json:"nodes"`
 }
 
+type ReviewFilterInput struct {
+	BodyLike *string `json:"body_like"`
+}
+
+type ReviewOrderInput struct {
+	Field     ReviewOrderFieldInput `json:"field"`
+	Direction *OrderDirection       `json:"direction"`
+}
+
+type ReviewsPayload struct {
+	TotalCount int           `json:"total_count"`
+	Nodes      []*gen.Review `json:"nodes"`
+}
+
 type UpdateProductInput struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
+}
+
+type UpdateReviewInput struct {
+	ID   int    `json:"id"`
+	Body string `json:"body"`
+}
+
+type UpdateUserInput struct {
+	ID       int    `json:"id"`
+	Username string `json:"username"`
+}
+
+type UserFilterInput struct {
+	UsernameLike *string `json:"username_like"`
+}
+
+type UserOrderInput struct {
+	Field     UserOrderFieldInput `json:"field"`
+	Direction *OrderDirection     `json:"direction"`
+}
+
+type UsersPayload struct {
+	TotalCount int         `json:"total_count"`
+	Nodes      []*gen.User `json:"nodes"`
 }
 
 type OrderDirection string
@@ -74,41 +122,121 @@ func (e OrderDirection) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type ProductlOrderFieldInput string
+type ProductOrderFieldInput string
 
 const (
-	ProductlOrderFieldInputName ProductlOrderFieldInput = "NAME"
+	ProductOrderFieldInputName ProductOrderFieldInput = "NAME"
 )
 
-var AllProductlOrderFieldInput = []ProductlOrderFieldInput{
-	ProductlOrderFieldInputName,
+var AllProductOrderFieldInput = []ProductOrderFieldInput{
+	ProductOrderFieldInputName,
 }
 
-func (e ProductlOrderFieldInput) IsValid() bool {
+func (e ProductOrderFieldInput) IsValid() bool {
 	switch e {
-	case ProductlOrderFieldInputName:
+	case ProductOrderFieldInputName:
 		return true
 	}
 	return false
 }
 
-func (e ProductlOrderFieldInput) String() string {
+func (e ProductOrderFieldInput) String() string {
 	return string(e)
 }
 
-func (e *ProductlOrderFieldInput) UnmarshalGQL(v interface{}) error {
+func (e *ProductOrderFieldInput) UnmarshalGQL(v interface{}) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = ProductlOrderFieldInput(str)
+	*e = ProductOrderFieldInput(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid ProductlOrderFieldInput", str)
+		return fmt.Errorf("%s is not a valid ProductOrderFieldInput", str)
 	}
 	return nil
 }
 
-func (e ProductlOrderFieldInput) MarshalGQL(w io.Writer) {
+func (e ProductOrderFieldInput) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type ReviewOrderFieldInput string
+
+const (
+	ReviewOrderFieldInputAuthorName  ReviewOrderFieldInput = "AUTHOR_NAME"
+	ReviewOrderFieldInputProductName ReviewOrderFieldInput = "PRODUCT_NAME"
+)
+
+var AllReviewOrderFieldInput = []ReviewOrderFieldInput{
+	ReviewOrderFieldInputAuthorName,
+	ReviewOrderFieldInputProductName,
+}
+
+func (e ReviewOrderFieldInput) IsValid() bool {
+	switch e {
+	case ReviewOrderFieldInputAuthorName, ReviewOrderFieldInputProductName:
+		return true
+	}
+	return false
+}
+
+func (e ReviewOrderFieldInput) String() string {
+	return string(e)
+}
+
+func (e *ReviewOrderFieldInput) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ReviewOrderFieldInput(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ReviewOrderFieldInput", str)
+	}
+	return nil
+}
+
+func (e ReviewOrderFieldInput) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type UserOrderFieldInput string
+
+const (
+	UserOrderFieldInputUserName UserOrderFieldInput = "USER_NAME"
+)
+
+var AllUserOrderFieldInput = []UserOrderFieldInput{
+	UserOrderFieldInputUserName,
+}
+
+func (e UserOrderFieldInput) IsValid() bool {
+	switch e {
+	case UserOrderFieldInputUserName:
+		return true
+	}
+	return false
+}
+
+func (e UserOrderFieldInput) String() string {
+	return string(e)
+}
+
+func (e *UserOrderFieldInput) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = UserOrderFieldInput(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid UserOrderFieldInput", str)
+	}
+	return nil
+}
+
+func (e UserOrderFieldInput) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }

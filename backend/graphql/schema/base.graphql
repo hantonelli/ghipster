@@ -8,9 +8,9 @@ enum OrderDirection {
 }
 
 type Query {
-    version: String
+    version: String!
 }
 
 type Mutation {
-    version: String
+    version: String!
 }
