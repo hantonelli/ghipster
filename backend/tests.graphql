@@ -1,0 +1,110 @@
+# mutation {
+#   createUser(input: {username: "horacio"}) {
+#     id
+#     username
+#   }
+# }
+# mutation {
+#   createUser(input: {username: "vanina"}) {
+#     id
+#     username
+#   }
+# }
+# query{
+#   users(limit: 10) {
+#     total_count
+#     nodes{
+#       id
+#       username
+#       reviews {
+#         id
+#     		body
+#       }
+#     }
+#   }
+# }
+
+# mutation {
+#   createProduct(input: {name: "product1"}) {
+#     id
+#     name
+#   }
+# }
+# mutation {
+#   createProduct(input: {name: "product2"}) {
+#     id
+#     name
+#   }
+# }
+# query {
+#   products(limit: 10) {
+#     total_count
+#     nodes {
+#       id
+#       name
+#       reviews {
+#         id
+#     		body
+#       }
+#     }
+#   }
+# }
+# mutation {
+#   createReview(input: {body: "horacio product1 review", authorId:8589934593, productId: 1}) {
+#     id
+#     body
+#   }
+# }
+# mutation {
+#   createReview(input: {body: "vanina product2 review", authorId:8589934594, productId: 2}) {
+#     id
+#     body
+#   }
+# }
+
+# query {
+#   products(limit: 10) {
+#     total_count
+#     nodes {
+#       id
+#       name
+#       reviews {
+#         id
+#     		body
+#         author {
+#           username
+#           reviews {
+#             product {
+#               id
+#             }
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
+# query {
+#   users(limit: 10) {
+#     total_count
+#     nodes {
+#       username
+#       reviews {
+#         id
+#     		body
+#       }
+#     }
+#   }
+# }
+#
+# query {
+#   reviews(limit: 10) {
+#     total_count
+#     nodes {
+#       id
+#       body
+#       author {
+#         username
+#       }
+#     }
+#   }
+# }
