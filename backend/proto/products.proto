@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package product;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+// import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+enum OrderDirection {
+  ASC = 0;
+  DESC = 1;
+}
+
+message Product {
+  int64 id = 1;
+  string name = 2;
+}
+
+message IDRequest {
+  int64 id = 1;  
+}
+
+message CreateProductRequest {
+  string name = 1;
+ }
+
+message UpdateProductRequest {
+  int64 id = 1;
+  string name = 2;
+ }
+
+message ListProductsReponse {
+  repeated Product products = 1;
+  int64 total_count = 2;
+}
+
+enum ListProductRequestOrderField {
+  NONE = 0;
+  NAME = 1;
+}
+
+message ListProductsRequestOrder {
+  ListProductRequestOrderField field = 1;
+  OrderDirection direction = 2;
+}
+
+message ListProductsRequestFilter {
+  string name_like = 1; // optional |  [(gogoproto.nullable) = true]
+}
+
+ message ListProductsRequest {
+  int64 limit = 1;
+  int64 offset = 2; // optional
+  ListProductsRequestOrder order_by = 3; // optional
+  ListProductsRequestFilter filter = 4; // optional
+ }
+
+
+ service ProductsService {
+  rpc GetProduct(IDRequest) returns (Product) {
+    option (google.api.http) = {
+      get: "/api/v1/products/{id}"
+    };
+  }
+  rpc GetProducts(ListProductsRequest) returns (ListProductsReponse) {
+    option (google.api.http) = {
+      get: "/api/v1/products"
+    };
+  }
+  rpc CreateProduct(CreateProductRequest) returns (Product) {
+    option (google.api.http) = {
+      post: "/api/v1/products"
+      body: "*"
+    };
+  }
+  rpc UpdateProduct(UpdateProductRequest) returns (Product) {
+    option (google.api.http) = {
+       put: "/api/v1/products"
+       body: "*"
+    };
+  }
+  rpc DeleteProduct(IDRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/api/v1/products/{id}"
+    };
+  }
+ }
+ 

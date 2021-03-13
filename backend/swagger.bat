@@ -1,0 +1,1 @@
+docker run -p 84:8080 -e SWAGGER_JSON=/mnt/products.swagger.json -v C:\Users\horacio.antonelli\projects\ghipster\backend\proto:/mnt swaggerapi/swagger-ui
