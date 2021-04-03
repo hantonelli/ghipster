@@ -10,9 +10,12 @@ import (
 	"github.com/hantonelli/ghipster/graphql/internal/models"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/product"
+	"github.com/hantonelli/ghipster/middleware"
 )
 
 func (r *mutationResolver) CreateProduct(ctx context.Context, input models.CreateProductInput) (*gen.Product, error) {
+	log := middleware.AddTraceToLog(ctx, r.logger)
+	log.Infow("Calling CreateProduct")
 	client := gen.FromContext(ctx)
 	return client.Product.
 		Create().
