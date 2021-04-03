@@ -62,7 +62,7 @@ message ListProductsRequestFilter {
       get: "/api/v1/products/{id}"
     };
   }
-  rpc GetProducts(ListProductsRequest) returns (ListProductsReponse) {
+  rpc GetProducts(ListProductsRequest) returns (ListProductsResponse) {
     option (google.api.http) = {
       get: "/api/v1/products"
     };
