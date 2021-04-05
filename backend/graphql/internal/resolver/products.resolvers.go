@@ -46,7 +46,7 @@ func (r *queryResolver) Product(ctx context.Context, id int) (*gen.Product, erro
 func (r *queryResolver) Products(ctx context.Context, filter *models.ProductFilterInput, orderBy *models.ProductOrderInput, offset *int, limit int) (*models.ProductsPayload, error) {
 	q := r.client.Product.Query()
 	if filter != nil {
-		if filter.NameLike != nil {
+		if filter.NameLike != nil && *filter.NameLike != "" {
 			q = q.Where(
 				product.NameEQ(*filter.NameLike),
 			)
