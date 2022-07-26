@@ -8,7 +8,7 @@ type Product {
 # Mutation
 
 input CreateProductInput {
-    name: String!
+    name: String! @binding(constraint: "required,max=20")
 }
 
 input UpdateProductInput {
