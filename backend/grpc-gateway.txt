@@ -1,0 +1,11 @@
+https://blog.golang.org/protobuf-apiv2
+https://github.com/gogo/protobuf/issues/711
+https://github.com/grpc-ecosystem/grpc-gateway/issues/1989
+https://github.com/golang/protobuf/issues/1094
+
+https://stackoverflow.com/questions/66142486/error-in-generated-code-with-protoc-gen-grpc-gateway
+
+https://forum.golangbridge.org/t/code-generation-from-proto-files/22837/2
+
+https://github.com/gogo/protobuf/issues/711
+https://github.com/grpc-ecosystem/grpc-gateway/issues/1959

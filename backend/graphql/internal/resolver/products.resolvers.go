@@ -13,6 +13,7 @@ import (
 	"github.com/hantonelli/ghipster/middleware"
 )
 
+// CreateProduct is the resolver for the createProduct field.
 func (r *mutationResolver) CreateProduct(ctx context.Context, input models.CreateProductInput) (*gen.Product, error) {
 	log := middleware.AddTraceToLog(ctx, r.logger)
 	log.Infow("Calling CreateProduct")
@@ -23,11 +24,13 @@ func (r *mutationResolver) CreateProduct(ctx context.Context, input models.Creat
 		Save(ctx)
 }
 
+// UpdateProduct is the resolver for the updateProduct field.
 func (r *mutationResolver) UpdateProduct(ctx context.Context, input models.UpdateProductInput) (*gen.Product, error) {
 	client := gen.FromContext(ctx)
 	return client.Product.UpdateOneID(input.ID).SetName(input.Name).Save(ctx)
 }
 
+// DeleteProduct is the resolver for the deleteProduct field.
 func (r *mutationResolver) DeleteProduct(ctx context.Context, id int) (bool, error) {
 	client := gen.FromContext(ctx)
 	err := client.Product.
@@ -39,10 +42,12 @@ func (r *mutationResolver) DeleteProduct(ctx context.Context, id int) (bool, err
 	return true, nil
 }
 
+// Product is the resolver for the product field.
 func (r *queryResolver) Product(ctx context.Context, id int) (*gen.Product, error) {
 	return r.client.Product.Get(ctx, id)
 }
 
+// Products is the resolver for the products field.
 func (r *queryResolver) Products(ctx context.Context, filter *models.ProductFilterInput, orderBy *models.ProductOrderInput, offset *int, limit int) (*models.ProductsPayload, error) {
 	q := r.client.Product.Query()
 	if filter != nil {

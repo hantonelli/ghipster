@@ -12,6 +12,7 @@ import (
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/review"
 )
 
+// CreateReview is the resolver for the createReview field.
 func (r *mutationResolver) CreateReview(ctx context.Context, input models.CreateReviewInput) (*gen.Review, error) {
 	client := gen.FromContext(ctx)
 	return client.Review.
@@ -22,11 +23,13 @@ func (r *mutationResolver) CreateReview(ctx context.Context, input models.Create
 		Save(ctx)
 }
 
+// UpdateReview is the resolver for the updateReview field.
 func (r *mutationResolver) UpdateReview(ctx context.Context, input models.UpdateReviewInput) (*gen.Review, error) {
 	client := gen.FromContext(ctx)
 	return client.Review.UpdateOneID(input.ID).SetBody(input.Body).Save(ctx)
 }
 
+// DeleteReview is the resolver for the deleteReview field.
 func (r *mutationResolver) DeleteReview(ctx context.Context, id int) (bool, error) {
 	client := gen.FromContext(ctx)
 	err := client.Review.
@@ -38,10 +41,22 @@ func (r *mutationResolver) DeleteReview(ctx context.Context, id int) (bool, erro
 	return true, nil
 }
 
+// Reviews is the resolver for the reviews field.
+func (r *productResolver) Reviews(ctx context.Context, obj *gen.Product) ([]*gen.Review, error) {
+	// return r.client.Review.Query().Where(review.HasProductWith(product.ID(obj.ID))).All(ctx)
+	result, err := obj.Edges.ReviewsOrErr()
+	if gen.IsNotLoaded(err) {
+		result, err = obj.QueryReviews().All(ctx)
+	}
+	return result, err
+}
+
+// Review is the resolver for the review field.
 func (r *queryResolver) Review(ctx context.Context, id int) (*gen.Review, error) {
 	return r.client.Review.Get(ctx, id)
 }
 
+// Reviews is the resolver for the reviews field.
 func (r *queryResolver) Reviews(ctx context.Context, filter *models.ReviewFilterInput, orderBy *models.ReviewOrderInput, offset *int, limit int) (*models.ReviewsPayload, error) {
 	q := r.client.Review.Query()
 	if filter != nil {
@@ -76,6 +91,7 @@ func (r *queryResolver) Reviews(ctx context.Context, filter *models.ReviewFilter
 	}, nil
 }
 
+// Author is the resolver for the author field.
 func (r *reviewResolver) Author(ctx context.Context, obj *gen.Review) (*gen.User, error) {
 	result, err := obj.Edges.AuthorOrErr()
 	if gen.IsNotLoaded(err) {
@@ -84,6 +100,7 @@ func (r *reviewResolver) Author(ctx context.Context, obj *gen.Review) (*gen.User
 	return result, err
 }
 
+// Product is the resolver for the product field.
 func (r *reviewResolver) Product(ctx context.Context, obj *gen.Review) (*gen.Product, error) {
 	result, err := obj.Edges.ProductOrErr()
 	if gen.IsNotLoaded(err) {
@@ -92,15 +109,7 @@ func (r *reviewResolver) Product(ctx context.Context, obj *gen.Review) (*gen.Pro
 	return result, err
 }
 
-func (r *productResolver) Reviews(ctx context.Context, obj *gen.Product) ([]*gen.Review, error) {
-	// return r.client.Review.Query().Where(review.HasProductWith(product.ID(obj.ID))).All(ctx)
-	result, err := obj.Edges.ReviewsOrErr()
-	if gen.IsNotLoaded(err) {
-		result, err = obj.QueryReviews().All(ctx)
-	}
-	return result, err
-}
-
+// Reviews is the resolver for the reviews field.
 func (r *userResolver) Reviews(ctx context.Context, obj *gen.User) ([]*gen.Review, error) {
 	result, err := obj.Edges.ReviewsOrErr()
 	if gen.IsNotLoaded(err) {

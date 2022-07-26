@@ -16,7 +16,6 @@ import (
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/migrate"
 	_ "github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/runtime"
-	"github.com/hantonelli/ghipster/graphql/internal/service/entgql"
 	"github.com/hantonelli/ghipster/middleware"
 )
 
@@ -43,7 +42,7 @@ func main() {
 	}
 
 	gqlSrv := handler.NewDefaultServer(resolver.NewSchema(dbClient, log))
-	gqlSrv.Use(entgql.Transactioner{TxOpener: dbClient})
+	// gqlSrv.Use(entgql.Transactioner{TxOpener: dbClient})
 	if cli.Debug {
 		gqlSrv.Use(&debug.Tracer{})
 	}

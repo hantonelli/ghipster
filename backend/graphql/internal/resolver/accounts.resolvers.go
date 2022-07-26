@@ -12,6 +12,7 @@ import (
 	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/user"
 )
 
+// CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input models.CreateUserInput) (*gen.User, error) {
 	client := gen.FromContext(ctx)
 	return client.User.
@@ -20,11 +21,13 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input models.CreateUs
 		Save(ctx)
 }
 
+// UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, input models.UpdateUserInput) (*gen.User, error) {
 	client := gen.FromContext(ctx)
 	return client.User.UpdateOneID(input.ID).SetUsername(input.Username).Save(ctx)
 }
 
+// DeleteUser is the resolver for the deleteUser field.
 func (r *mutationResolver) DeleteUser(ctx context.Context, id int) (bool, error) {
 	client := gen.FromContext(ctx)
 	err := client.User.
@@ -36,10 +39,12 @@ func (r *mutationResolver) DeleteUser(ctx context.Context, id int) (bool, error)
 	return true, nil
 }
 
+// User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id int) (*gen.User, error) {
 	return r.client.User.Get(ctx, id)
 }
 
+// Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context, filter *models.UserFilterInput, orderBy *models.UserOrderInput, offset *int, limit int) (*models.UsersPayload, error) {
 	q := r.client.User.Query()
 	if filter != nil {

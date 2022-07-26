@@ -9,10 +9,12 @@ import (
 	graphql1 "github.com/hantonelli/ghipster/graphql/internal/graphql"
 )
 
+// Version is the resolver for the version field.
 func (r *mutationResolver) Version(ctx context.Context) (string, error) {
 	return "1", nil
 }
 
+// Version is the resolver for the version field.
 func (r *queryResolver) Version(ctx context.Context) (string, error) {
 	return "1", nil
 }

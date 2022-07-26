@@ -1,10 +1,8 @@
 syntax = "proto3";
 
-package product;
+option go_package = "go/product";
 
-import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
-// import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "validate/validate.proto";
 
 enum OrderDirection {
   ASC = 0;
@@ -21,7 +19,10 @@ message IDRequest {
 }
 
 message CreateProductRequest {
-  string name = 1;
+  string name = 1 [(validate.rules).string = {
+    pattern:   "^[^[0-9]A-Za-z]+( [^[0-9]A-Za-z]+)*$",
+    max_bytes: 256,
+ }];
  }
 
 message UpdateProductRequest {
@@ -48,41 +49,22 @@ message ListProductsRequestFilter {
   string name_like = 1; // optional |  [(gogoproto.nullable) = true]
 }
 
- message ListProductsRequest {
+message ListProductsRequest {
   int64 limit = 1;
   int64 offset = 2; // optional
   ListProductsRequestOrder order_by = 3; // optional
   ListProductsRequestFilter filter = 4; // optional
- }
+}
+
+message DeleteProductsResponse {
+}
 
 
  service ProductsService {
-  rpc GetProduct(IDRequest) returns (Product) {
-    option (google.api.http) = {
-      get: "/api/v1/products/{id}"
-    };
-  }
-  rpc GetProducts(ListProductsRequest) returns (ListProductsResponse) {
-    option (google.api.http) = {
-      get: "/api/v1/products"
-    };
-  }
-  rpc CreateProduct(CreateProductRequest) returns (Product) {
-    option (google.api.http) = {
-      post: "/api/v1/products"
-      body: "*"
-    };
-  }
-  rpc UpdateProduct(UpdateProductRequest) returns (Product) {
-    option (google.api.http) = {
-       put: "/api/v1/products"
-       body: "*"
-    };
-  }
-  rpc DeleteProduct(IDRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/api/v1/products/{id}"
-    };
-  }
+  rpc GetProduct(IDRequest) returns (Product) {}
+  rpc GetProducts(ListProductsRequest) returns (ListProductsResponse) {}
+  rpc CreateProduct(CreateProductRequest) returns (Product) {}
+  rpc UpdateProduct(UpdateProductRequest) returns (Product) {}
+  rpc DeleteProduct(IDRequest) returns (DeleteProductsResponse) {}
  }
  
