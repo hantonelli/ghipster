@@ -14,7 +14,7 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
 	"github.com/hantonelli/ghipster/graphql/internal/models"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -108,34 +108,34 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	Version(ctx context.Context) (string, error)
-	CreateUser(ctx context.Context, input models.CreateUserInput) (*gen.User, error)
-	UpdateUser(ctx context.Context, input models.UpdateUserInput) (*gen.User, error)
+	CreateUser(ctx context.Context, input models.CreateUserInput) (*entgen.User, error)
+	UpdateUser(ctx context.Context, input models.UpdateUserInput) (*entgen.User, error)
 	DeleteUser(ctx context.Context, id int) (bool, error)
-	CreateProduct(ctx context.Context, input models.CreateProductInput) (*gen.Product, error)
-	UpdateProduct(ctx context.Context, input models.UpdateProductInput) (*gen.Product, error)
+	CreateProduct(ctx context.Context, input models.CreateProductInput) (*entgen.Product, error)
+	UpdateProduct(ctx context.Context, input models.UpdateProductInput) (*entgen.Product, error)
 	DeleteProduct(ctx context.Context, id int) (bool, error)
-	CreateReview(ctx context.Context, input models.CreateReviewInput) (*gen.Review, error)
-	UpdateReview(ctx context.Context, input models.UpdateReviewInput) (*gen.Review, error)
+	CreateReview(ctx context.Context, input models.CreateReviewInput) (*entgen.Review, error)
+	UpdateReview(ctx context.Context, input models.UpdateReviewInput) (*entgen.Review, error)
 	DeleteReview(ctx context.Context, id int) (bool, error)
 }
 type ProductResolver interface {
-	Reviews(ctx context.Context, obj *gen.Product) ([]*gen.Review, error)
+	Reviews(ctx context.Context, obj *entgen.Product) ([]*entgen.Review, error)
 }
 type QueryResolver interface {
 	Version(ctx context.Context) (string, error)
-	User(ctx context.Context, id int) (*gen.User, error)
+	User(ctx context.Context, id int) (*entgen.User, error)
 	Users(ctx context.Context, filter *models.UserFilterInput, orderBy *models.UserOrderInput, offset *int, limit int) (*models.UsersPayload, error)
-	Product(ctx context.Context, id int) (*gen.Product, error)
+	Product(ctx context.Context, id int) (*entgen.Product, error)
 	Products(ctx context.Context, filter *models.ProductFilterInput, orderBy *models.ProductOrderInput, offset *int, limit int) (*models.ProductsPayload, error)
-	Review(ctx context.Context, id int) (*gen.Review, error)
+	Review(ctx context.Context, id int) (*entgen.Review, error)
 	Reviews(ctx context.Context, filter *models.ReviewFilterInput, orderBy *models.ReviewOrderInput, offset *int, limit int) (*models.ReviewsPayload, error)
 }
 type ReviewResolver interface {
-	Author(ctx context.Context, obj *gen.Review) (*gen.User, error)
-	Product(ctx context.Context, obj *gen.Review) (*gen.Product, error)
+	Author(ctx context.Context, obj *entgen.Review) (*entgen.User, error)
+	Product(ctx context.Context, obj *entgen.Review) (*entgen.Product, error)
 }
 type UserResolver interface {
-	Reviews(ctx context.Context, obj *gen.User) ([]*gen.Review, error)
+	Reviews(ctx context.Context, obj *entgen.User) ([]*entgen.Review, error)
 }
 
 type executableSchema struct {
@@ -1164,9 +1164,9 @@ func (ec *executionContext) _Mutation_createUser(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.User)
+	res := resTmp.(*entgen.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1224,9 +1224,9 @@ func (ec *executionContext) _Mutation_updateUser(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.User)
+	res := resTmp.(*entgen.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1339,9 +1339,9 @@ func (ec *executionContext) _Mutation_createProduct(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.Product)
+	res := resTmp.(*entgen.Product)
 	fc.Result = res
-	return ec.marshalOProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProduct(ctx, field.Selections, res)
+	return ec.marshalOProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProduct(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createProduct(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1399,9 +1399,9 @@ func (ec *executionContext) _Mutation_updateProduct(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.Product)
+	res := resTmp.(*entgen.Product)
 	fc.Result = res
-	return ec.marshalOProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProduct(ctx, field.Selections, res)
+	return ec.marshalOProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProduct(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateProduct(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1514,9 +1514,9 @@ func (ec *executionContext) _Mutation_createReview(ctx context.Context, field gr
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.Review)
+	res := resTmp.(*entgen.Review)
 	fc.Result = res
-	return ec.marshalOReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReview(ctx, field.Selections, res)
+	return ec.marshalOReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReview(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createReview(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1576,9 +1576,9 @@ func (ec *executionContext) _Mutation_updateReview(ctx context.Context, field gr
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.Review)
+	res := resTmp.(*entgen.Review)
 	fc.Result = res
-	return ec.marshalOReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReview(ctx, field.Selections, res)
+	return ec.marshalOReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReview(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateReview(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1670,7 +1670,7 @@ func (ec *executionContext) fieldContext_Mutation_deleteReview(ctx context.Conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Product_id(ctx context.Context, field graphql.CollectedField, obj *gen.Product) (ret graphql.Marshaler) {
+func (ec *executionContext) _Product_id(ctx context.Context, field graphql.CollectedField, obj *entgen.Product) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Product_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -1714,7 +1714,7 @@ func (ec *executionContext) fieldContext_Product_id(ctx context.Context, field g
 	return fc, nil
 }
 
-func (ec *executionContext) _Product_name(ctx context.Context, field graphql.CollectedField, obj *gen.Product) (ret graphql.Marshaler) {
+func (ec *executionContext) _Product_name(ctx context.Context, field graphql.CollectedField, obj *entgen.Product) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Product_name(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -1758,7 +1758,7 @@ func (ec *executionContext) fieldContext_Product_name(ctx context.Context, field
 	return fc, nil
 }
 
-func (ec *executionContext) _Product_reviews(ctx context.Context, field graphql.CollectedField, obj *gen.Product) (ret graphql.Marshaler) {
+func (ec *executionContext) _Product_reviews(ctx context.Context, field graphql.CollectedField, obj *entgen.Product) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Product_reviews(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -1784,9 +1784,9 @@ func (ec *executionContext) _Product_reviews(ctx context.Context, field graphql.
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*gen.Review)
+	res := resTmp.([]*entgen.Review)
 	fc.Result = res
-	return ec.marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReviewᚄ(ctx, field.Selections, res)
+	return ec.marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReviewᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Product_reviews(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1882,9 +1882,9 @@ func (ec *executionContext) _ProductsPayload_nodes(ctx context.Context, field gr
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*gen.Product)
+	res := resTmp.([]*entgen.Product)
 	fc.Result = res
-	return ec.marshalNProduct2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProductᚄ(ctx, field.Selections, res)
+	return ec.marshalNProduct2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProductᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ProductsPayload_nodes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1975,9 +1975,9 @@ func (ec *executionContext) _Query_user(ctx context.Context, field graphql.Colle
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.User)
+	res := resTmp.(*entgen.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_user(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2096,9 +2096,9 @@ func (ec *executionContext) _Query_product(ctx context.Context, field graphql.Co
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.Product)
+	res := resTmp.(*entgen.Product)
 	fc.Result = res
-	return ec.marshalOProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProduct(ctx, field.Selections, res)
+	return ec.marshalOProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProduct(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_product(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2217,9 +2217,9 @@ func (ec *executionContext) _Query_review(ctx context.Context, field graphql.Col
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*gen.Review)
+	res := resTmp.(*entgen.Review)
 	fc.Result = res
-	return ec.marshalOReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReview(ctx, field.Selections, res)
+	return ec.marshalOReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReview(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_review(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2446,7 +2446,7 @@ func (ec *executionContext) fieldContext_Query___schema(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _Review_id(ctx context.Context, field graphql.CollectedField, obj *gen.Review) (ret graphql.Marshaler) {
+func (ec *executionContext) _Review_id(ctx context.Context, field graphql.CollectedField, obj *entgen.Review) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Review_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -2490,7 +2490,7 @@ func (ec *executionContext) fieldContext_Review_id(ctx context.Context, field gr
 	return fc, nil
 }
 
-func (ec *executionContext) _Review_body(ctx context.Context, field graphql.CollectedField, obj *gen.Review) (ret graphql.Marshaler) {
+func (ec *executionContext) _Review_body(ctx context.Context, field graphql.CollectedField, obj *entgen.Review) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Review_body(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -2534,7 +2534,7 @@ func (ec *executionContext) fieldContext_Review_body(ctx context.Context, field 
 	return fc, nil
 }
 
-func (ec *executionContext) _Review_author(ctx context.Context, field graphql.CollectedField, obj *gen.Review) (ret graphql.Marshaler) {
+func (ec *executionContext) _Review_author(ctx context.Context, field graphql.CollectedField, obj *entgen.Review) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Review_author(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -2560,9 +2560,9 @@ func (ec *executionContext) _Review_author(ctx context.Context, field graphql.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*gen.User)
+	res := resTmp.(*entgen.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUser(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Review_author(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2586,7 +2586,7 @@ func (ec *executionContext) fieldContext_Review_author(ctx context.Context, fiel
 	return fc, nil
 }
 
-func (ec *executionContext) _Review_product(ctx context.Context, field graphql.CollectedField, obj *gen.Review) (ret graphql.Marshaler) {
+func (ec *executionContext) _Review_product(ctx context.Context, field graphql.CollectedField, obj *entgen.Review) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Review_product(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -2612,9 +2612,9 @@ func (ec *executionContext) _Review_product(ctx context.Context, field graphql.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*gen.Product)
+	res := resTmp.(*entgen.Product)
 	fc.Result = res
-	return ec.marshalNProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProduct(ctx, field.Selections, res)
+	return ec.marshalNProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProduct(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Review_product(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2708,9 +2708,9 @@ func (ec *executionContext) _ReviewsPayload_nodes(ctx context.Context, field gra
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*gen.Review)
+	res := resTmp.([]*entgen.Review)
 	fc.Result = res
-	return ec.marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReviewᚄ(ctx, field.Selections, res)
+	return ec.marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReviewᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ReviewsPayload_nodes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2736,7 +2736,7 @@ func (ec *executionContext) fieldContext_ReviewsPayload_nodes(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _User_id(ctx context.Context, field graphql.CollectedField, obj *gen.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_id(ctx context.Context, field graphql.CollectedField, obj *entgen.User) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_User_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -2780,7 +2780,7 @@ func (ec *executionContext) fieldContext_User_id(ctx context.Context, field grap
 	return fc, nil
 }
 
-func (ec *executionContext) _User_username(ctx context.Context, field graphql.CollectedField, obj *gen.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_username(ctx context.Context, field graphql.CollectedField, obj *entgen.User) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_User_username(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -2824,7 +2824,7 @@ func (ec *executionContext) fieldContext_User_username(ctx context.Context, fiel
 	return fc, nil
 }
 
-func (ec *executionContext) _User_reviews(ctx context.Context, field graphql.CollectedField, obj *gen.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_reviews(ctx context.Context, field graphql.CollectedField, obj *entgen.User) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_User_reviews(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -2850,9 +2850,9 @@ func (ec *executionContext) _User_reviews(ctx context.Context, field graphql.Col
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*gen.Review)
+	res := resTmp.([]*entgen.Review)
 	fc.Result = res
-	return ec.marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReviewᚄ(ctx, field.Selections, res)
+	return ec.marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReviewᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_User_reviews(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2948,9 +2948,9 @@ func (ec *executionContext) _UsersPayload_nodes(ctx context.Context, field graph
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*gen.User)
+	res := resTmp.([]*entgen.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUserᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UsersPayload_nodes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5259,7 +5259,7 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 var productImplementors = []string{"Product"}
 
-func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, obj *gen.Product) graphql.Marshaler {
+func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, obj *entgen.Product) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, productImplementors)
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
@@ -5543,7 +5543,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 
 var reviewImplementors = []string{"Review"}
 
-func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, obj *gen.Review) graphql.Marshaler {
+func (ec *executionContext) _Review(ctx context.Context, sel ast.SelectionSet, obj *entgen.Review) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, reviewImplementors)
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
@@ -5653,7 +5653,7 @@ func (ec *executionContext) _ReviewsPayload(ctx context.Context, sel ast.Selecti
 
 var userImplementors = []string{"User"}
 
-func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj *gen.User) graphql.Marshaler {
+func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj *entgen.User) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, userImplementors)
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
@@ -6119,11 +6119,11 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNProduct2githubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProduct(ctx context.Context, sel ast.SelectionSet, v gen.Product) graphql.Marshaler {
+func (ec *executionContext) marshalNProduct2githubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProduct(ctx context.Context, sel ast.SelectionSet, v entgen.Product) graphql.Marshaler {
 	return ec._Product(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNProduct2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProductᚄ(ctx context.Context, sel ast.SelectionSet, v []*gen.Product) graphql.Marshaler {
+func (ec *executionContext) marshalNProduct2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProductᚄ(ctx context.Context, sel ast.SelectionSet, v []*entgen.Product) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -6147,7 +6147,7 @@ func (ec *executionContext) marshalNProduct2ᚕᚖgithubᚗcomᚋhantonelliᚋgh
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProduct(ctx, sel, v[i])
+			ret[i] = ec.marshalNProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProduct(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -6167,7 +6167,7 @@ func (ec *executionContext) marshalNProduct2ᚕᚖgithubᚗcomᚋhantonelliᚋgh
 	return ret
 }
 
-func (ec *executionContext) marshalNProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProduct(ctx context.Context, sel ast.SelectionSet, v *gen.Product) graphql.Marshaler {
+func (ec *executionContext) marshalNProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProduct(ctx context.Context, sel ast.SelectionSet, v *entgen.Product) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -6201,7 +6201,7 @@ func (ec *executionContext) marshalNProductsPayload2ᚖgithubᚗcomᚋhantonelli
 	return ec._ProductsPayload(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReviewᚄ(ctx context.Context, sel ast.SelectionSet, v []*gen.Review) graphql.Marshaler {
+func (ec *executionContext) marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReviewᚄ(ctx context.Context, sel ast.SelectionSet, v []*entgen.Review) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -6225,7 +6225,7 @@ func (ec *executionContext) marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghi
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReview(ctx, sel, v[i])
+			ret[i] = ec.marshalNReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReview(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -6245,7 +6245,7 @@ func (ec *executionContext) marshalNReview2ᚕᚖgithubᚗcomᚋhantonelliᚋghi
 	return ret
 }
 
-func (ec *executionContext) marshalNReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReview(ctx context.Context, sel ast.SelectionSet, v *gen.Review) graphql.Marshaler {
+func (ec *executionContext) marshalNReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReview(ctx context.Context, sel ast.SelectionSet, v *entgen.Review) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -6309,11 +6309,11 @@ func (ec *executionContext) unmarshalNUpdateUserInput2githubᚗcomᚋhantonelli�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNUser2githubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUser(ctx context.Context, sel ast.SelectionSet, v gen.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2githubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUser(ctx context.Context, sel ast.SelectionSet, v entgen.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*gen.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*entgen.User) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -6337,7 +6337,7 @@ func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋhantonelliᚋghips
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUser(ctx, sel, v[i])
+			ret[i] = ec.marshalNUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUser(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -6357,7 +6357,7 @@ func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋhantonelliᚋghips
 	return ret
 }
 
-func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUser(ctx context.Context, sel ast.SelectionSet, v *gen.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUser(ctx context.Context, sel ast.SelectionSet, v *entgen.User) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -6702,7 +6702,7 @@ func (ec *executionContext) marshalOOrderDirection2ᚖgithubᚗcomᚋhantonelli�
 	return v
 }
 
-func (ec *executionContext) marshalOProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐProduct(ctx context.Context, sel ast.SelectionSet, v *gen.Product) graphql.Marshaler {
+func (ec *executionContext) marshalOProduct2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐProduct(ctx context.Context, sel ast.SelectionSet, v *entgen.Product) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -6725,7 +6725,7 @@ func (ec *executionContext) unmarshalOProductOrderInput2ᚖgithubᚗcomᚋhanton
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐReview(ctx context.Context, sel ast.SelectionSet, v *gen.Review) graphql.Marshaler {
+func (ec *executionContext) marshalOReview2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐReview(ctx context.Context, sel ast.SelectionSet, v *entgen.Review) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -6764,7 +6764,7 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
-func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋgenᚐUser(ctx context.Context, sel ast.SelectionSet, v *gen.User) graphql.Marshaler {
+func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋhantonelliᚋghipsterᚋgraphqlᚋinternalᚋserviceᚋentᚋentgenᚐUser(ctx context.Context, sel ast.SelectionSet, v *entgen.User) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

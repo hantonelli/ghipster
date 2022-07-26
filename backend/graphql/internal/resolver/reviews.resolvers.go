@@ -8,13 +8,13 @@ import (
 
 	graphql1 "github.com/hantonelli/ghipster/graphql/internal/graphql"
 	"github.com/hantonelli/ghipster/graphql/internal/models"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/review"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen/review"
 )
 
 // CreateReview is the resolver for the createReview field.
-func (r *mutationResolver) CreateReview(ctx context.Context, input models.CreateReviewInput) (*gen.Review, error) {
-	client := gen.FromContext(ctx)
+func (r *mutationResolver) CreateReview(ctx context.Context, input models.CreateReviewInput) (*entgen.Review, error) {
+	client := entgen.FromContext(ctx)
 	return client.Review.
 		Create().
 		SetBody(input.Body).
@@ -24,14 +24,14 @@ func (r *mutationResolver) CreateReview(ctx context.Context, input models.Create
 }
 
 // UpdateReview is the resolver for the updateReview field.
-func (r *mutationResolver) UpdateReview(ctx context.Context, input models.UpdateReviewInput) (*gen.Review, error) {
-	client := gen.FromContext(ctx)
+func (r *mutationResolver) UpdateReview(ctx context.Context, input models.UpdateReviewInput) (*entgen.Review, error) {
+	client := entgen.FromContext(ctx)
 	return client.Review.UpdateOneID(input.ID).SetBody(input.Body).Save(ctx)
 }
 
 // DeleteReview is the resolver for the deleteReview field.
 func (r *mutationResolver) DeleteReview(ctx context.Context, id int) (bool, error) {
-	client := gen.FromContext(ctx)
+	client := entgen.FromContext(ctx)
 	err := client.Review.
 		DeleteOneID(id).
 		Exec(ctx)
@@ -42,17 +42,17 @@ func (r *mutationResolver) DeleteReview(ctx context.Context, id int) (bool, erro
 }
 
 // Reviews is the resolver for the reviews field.
-func (r *productResolver) Reviews(ctx context.Context, obj *gen.Product) ([]*gen.Review, error) {
+func (r *productResolver) Reviews(ctx context.Context, obj *entgen.Product) ([]*entgen.Review, error) {
 	// return r.client.Review.Query().Where(review.HasProductWith(product.ID(obj.ID))).All(ctx)
 	result, err := obj.Edges.ReviewsOrErr()
-	if gen.IsNotLoaded(err) {
+	if entgen.IsNotLoaded(err) {
 		result, err = obj.QueryReviews().All(ctx)
 	}
 	return result, err
 }
 
 // Review is the resolver for the review field.
-func (r *queryResolver) Review(ctx context.Context, id int) (*gen.Review, error) {
+func (r *queryResolver) Review(ctx context.Context, id int) (*entgen.Review, error) {
 	return r.client.Review.Get(ctx, id)
 }
 
@@ -73,9 +73,9 @@ func (r *queryResolver) Reviews(ctx context.Context, filter *models.ReviewFilter
 
 	if orderBy != nil {
 		if *orderBy.Direction == models.OrderDirectionDesc {
-			q = q.Order(gen.Desc(string(orderBy.Field)))
+			q = q.Order(entgen.Desc(string(orderBy.Field)))
 		} else {
-			q = q.Order(gen.Asc(string(orderBy.Field)))
+			q = q.Order(entgen.Asc(string(orderBy.Field)))
 		}
 	}
 	if offset != nil {
@@ -92,27 +92,27 @@ func (r *queryResolver) Reviews(ctx context.Context, filter *models.ReviewFilter
 }
 
 // Author is the resolver for the author field.
-func (r *reviewResolver) Author(ctx context.Context, obj *gen.Review) (*gen.User, error) {
+func (r *reviewResolver) Author(ctx context.Context, obj *entgen.Review) (*entgen.User, error) {
 	result, err := obj.Edges.AuthorOrErr()
-	if gen.IsNotLoaded(err) {
+	if entgen.IsNotLoaded(err) {
 		result, err = obj.QueryAuthor().Only(ctx)
 	}
 	return result, err
 }
 
 // Product is the resolver for the product field.
-func (r *reviewResolver) Product(ctx context.Context, obj *gen.Review) (*gen.Product, error) {
+func (r *reviewResolver) Product(ctx context.Context, obj *entgen.Review) (*entgen.Product, error) {
 	result, err := obj.Edges.ProductOrErr()
-	if gen.IsNotLoaded(err) {
+	if entgen.IsNotLoaded(err) {
 		result, err = obj.QueryProduct().Only(ctx)
 	}
 	return result, err
 }
 
 // Reviews is the resolver for the reviews field.
-func (r *userResolver) Reviews(ctx context.Context, obj *gen.User) ([]*gen.Review, error) {
+func (r *userResolver) Reviews(ctx context.Context, obj *entgen.User) ([]*entgen.Review, error) {
 	result, err := obj.Edges.ReviewsOrErr()
-	if gen.IsNotLoaded(err) {
+	if entgen.IsNotLoaded(err) {
 		result, err = obj.QueryReviews().All(ctx)
 	}
 	return result, err

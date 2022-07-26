@@ -14,4 +14,4 @@ resolver:
   package: resolver
 
 autobind:
-- github.com/hantonelli/ghipster/graphql/internal/service/ent/gen
+- github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen

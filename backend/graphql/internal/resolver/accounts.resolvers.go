@@ -8,13 +8,13 @@ import (
 
 	graphql1 "github.com/hantonelli/ghipster/graphql/internal/graphql"
 	"github.com/hantonelli/ghipster/graphql/internal/models"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/user"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen/user"
 )
 
 // CreateUser is the resolver for the createUser field.
-func (r *mutationResolver) CreateUser(ctx context.Context, input models.CreateUserInput) (*gen.User, error) {
-	client := gen.FromContext(ctx)
+func (r *mutationResolver) CreateUser(ctx context.Context, input models.CreateUserInput) (*entgen.User, error) {
+	client := entgen.FromContext(ctx)
 	return client.User.
 		Create().
 		SetUsername(input.Username).
@@ -22,14 +22,14 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input models.CreateUs
 }
 
 // UpdateUser is the resolver for the updateUser field.
-func (r *mutationResolver) UpdateUser(ctx context.Context, input models.UpdateUserInput) (*gen.User, error) {
-	client := gen.FromContext(ctx)
+func (r *mutationResolver) UpdateUser(ctx context.Context, input models.UpdateUserInput) (*entgen.User, error) {
+	client := entgen.FromContext(ctx)
 	return client.User.UpdateOneID(input.ID).SetUsername(input.Username).Save(ctx)
 }
 
 // DeleteUser is the resolver for the deleteUser field.
 func (r *mutationResolver) DeleteUser(ctx context.Context, id int) (bool, error) {
-	client := gen.FromContext(ctx)
+	client := entgen.FromContext(ctx)
 	err := client.User.
 		DeleteOneID(id).
 		Exec(ctx)
@@ -40,7 +40,7 @@ func (r *mutationResolver) DeleteUser(ctx context.Context, id int) (bool, error)
 }
 
 // User is the resolver for the user field.
-func (r *queryResolver) User(ctx context.Context, id int) (*gen.User, error) {
+func (r *queryResolver) User(ctx context.Context, id int) (*entgen.User, error) {
 	return r.client.User.Get(ctx, id)
 }
 
@@ -61,9 +61,9 @@ func (r *queryResolver) Users(ctx context.Context, filter *models.UserFilterInpu
 
 	if orderBy != nil {
 		if *orderBy.Direction == models.OrderDirectionDesc {
-			q = q.Order(gen.Desc(string(orderBy.Field)))
+			q = q.Order(entgen.Desc(string(orderBy.Field)))
 		} else {
-			q = q.Order(gen.Asc(string(orderBy.Field)))
+			q = q.Order(entgen.Asc(string(orderBy.Field)))
 		}
 	}
 	if offset != nil {

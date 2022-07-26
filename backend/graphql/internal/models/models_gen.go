@@ -7,7 +7,7 @@ import (
 	"io"
 	"strconv"
 
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen"
 )
 
 type CreateProductInput struct {
@@ -34,8 +34,8 @@ type ProductOrderInput struct {
 }
 
 type ProductsPayload struct {
-	TotalCount int            `json:"total_count"`
-	Nodes      []*gen.Product `json:"nodes"`
+	TotalCount int               `json:"total_count"`
+	Nodes      []*entgen.Product `json:"nodes"`
 }
 
 type ReviewFilterInput struct {
@@ -48,8 +48,8 @@ type ReviewOrderInput struct {
 }
 
 type ReviewsPayload struct {
-	TotalCount int           `json:"total_count"`
-	Nodes      []*gen.Review `json:"nodes"`
+	TotalCount int              `json:"total_count"`
+	Nodes      []*entgen.Review `json:"nodes"`
 }
 
 type UpdateProductInput struct {
@@ -77,8 +77,8 @@ type UserOrderInput struct {
 }
 
 type UsersPayload struct {
-	TotalCount int         `json:"total_count"`
-	Nodes      []*gen.User `json:"nodes"`
+	TotalCount int            `json:"total_count"`
+	Nodes      []*entgen.User `json:"nodes"`
 }
 
 type OrderDirection string

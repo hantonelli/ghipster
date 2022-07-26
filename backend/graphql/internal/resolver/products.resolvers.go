@@ -8,16 +8,16 @@ import (
 
 	graphql1 "github.com/hantonelli/ghipster/graphql/internal/graphql"
 	"github.com/hantonelli/ghipster/graphql/internal/models"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/product"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen/product"
 	"github.com/hantonelli/ghipster/middleware"
 )
 
 // CreateProduct is the resolver for the createProduct field.
-func (r *mutationResolver) CreateProduct(ctx context.Context, input models.CreateProductInput) (*gen.Product, error) {
+func (r *mutationResolver) CreateProduct(ctx context.Context, input models.CreateProductInput) (*entgen.Product, error) {
 	log := middleware.AddTraceToLog(ctx, r.logger)
 	log.Infow("Calling CreateProduct")
-	client := gen.FromContext(ctx)
+	client := entgen.FromContext(ctx)
 	return client.Product.
 		Create().
 		SetName(input.Name).
@@ -25,14 +25,14 @@ func (r *mutationResolver) CreateProduct(ctx context.Context, input models.Creat
 }
 
 // UpdateProduct is the resolver for the updateProduct field.
-func (r *mutationResolver) UpdateProduct(ctx context.Context, input models.UpdateProductInput) (*gen.Product, error) {
-	client := gen.FromContext(ctx)
+func (r *mutationResolver) UpdateProduct(ctx context.Context, input models.UpdateProductInput) (*entgen.Product, error) {
+	client := entgen.FromContext(ctx)
 	return client.Product.UpdateOneID(input.ID).SetName(input.Name).Save(ctx)
 }
 
 // DeleteProduct is the resolver for the deleteProduct field.
 func (r *mutationResolver) DeleteProduct(ctx context.Context, id int) (bool, error) {
-	client := gen.FromContext(ctx)
+	client := entgen.FromContext(ctx)
 	err := client.Product.
 		DeleteOneID(id).
 		Exec(ctx)
@@ -43,7 +43,7 @@ func (r *mutationResolver) DeleteProduct(ctx context.Context, id int) (bool, err
 }
 
 // Product is the resolver for the product field.
-func (r *queryResolver) Product(ctx context.Context, id int) (*gen.Product, error) {
+func (r *queryResolver) Product(ctx context.Context, id int) (*entgen.Product, error) {
 	return r.client.Product.Get(ctx, id)
 }
 
@@ -64,9 +64,9 @@ func (r *queryResolver) Products(ctx context.Context, filter *models.ProductFilt
 
 	if orderBy != nil {
 		if *orderBy.Direction == models.OrderDirectionDesc {
-			q = q.Order(gen.Desc(string(orderBy.Field)))
+			q = q.Order(entgen.Desc(string(orderBy.Field)))
 		} else {
-			q = q.Order(gen.Asc(string(orderBy.Field)))
+			q = q.Order(entgen.Asc(string(orderBy.Field)))
 		}
 	}
 	if offset != nil {

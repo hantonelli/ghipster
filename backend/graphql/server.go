@@ -13,9 +13,9 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/hantonelli/ghipster/graphql/internal/resolver"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen"
-	"github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/migrate"
-	_ "github.com/hantonelli/ghipster/graphql/internal/service/ent/gen/runtime"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen"
+	"github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen/migrate"
+	_ "github.com/hantonelli/ghipster/graphql/internal/service/ent/entgen/runtime"
 	"github.com/hantonelli/ghipster/middleware"
 )
 
@@ -27,7 +27,7 @@ func main() {
 	kong.Parse(&cli)
 
 	log, _ := zap.NewProduction()
-	dbClient, err := gen.Open(
+	dbClient, err := entgen.Open(
 		"sqlite3",
 		"file:ent?mode=memory&cache=shared&_fk=1",
 	)
